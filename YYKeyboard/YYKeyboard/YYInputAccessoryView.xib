@@ -13,13 +13,12 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vLf-8w-0qd">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vLf-8w-0qd">
                     <rect key="frame" x="359" y="7" width="40" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="VQv-C6-UqK"/>
                         <constraint firstAttribute="width" constant="40" id="cPP-G4-qNn"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="完成">
                         <color key="titleColor" red="0.12941176470588234" green="0.59215686274509804" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
@@ -27,18 +26,19 @@
                         <action selector="doneAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="KCe-eb-UKE"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Srk-ln-Our">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Srk-ln-Our">
                     <rect key="frame" x="70" y="7" width="40" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="A0A-ub-hce"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="ZP5-8c-bfo"/>
                         <constraint firstAttribute="height" constant="30" id="ufY-5K-9dO"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="123">
                         <color key="titleColor" red="0.12941176469999999" green="0.59215686270000001" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
-                    <state key="selected" title="Abc"/>
+                    <state key="selected" title="Abc">
+                        <color key="titleColor" red="0.1843137255" green="0.51372549020000002" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
                     <connections>
                         <action selector="leftItem2Action:" destination="iN0-l3-epB" eventType="touchUpInside" id="KGm-9L-hK8"/>
                     </connections>
@@ -49,18 +49,19 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Poc-bP-LYp">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Poc-bP-LYp">
                     <rect key="frame" x="15" y="7" width="40" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="8zo-tY-IUs"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="PML-oj-82f"/>
                         <constraint firstAttribute="height" constant="30" id="az1-3b-if9"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="符">
-                        <color key="titleColor" red="0.12941176469999999" green="0.59215686270000001" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="0.18431372549019609" green="0.51372549019607838" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
-                    <state key="selected" title="Abc"/>
+                    <state key="selected" title="Abc">
+                        <color key="titleColor" red="0.18431372549019609" green="0.51372549019607838" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
                     <connections>
                         <action selector="leftItem1Action:" destination="iN0-l3-epB" eventType="touchUpInside" id="LRx-Za-jVD"/>
                     </connections>

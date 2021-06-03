@@ -91,15 +91,15 @@
 		58B136D6266875480025962F /* YYKeyboard */ = {
 			isa = PBXGroup;
 			children = (
-				58B136D7266875480025962F /* YYInputAccessoryView.m */,
-				58B136D8266875480025962F /* YYKeyboardView.h */,
-				58B136D9266875480025962F /* YYKeyButton.h */,
-				58B136DA266875480025962F /* YYKeyboardView.xib */,
-				58B136DB266875480025962F /* YYKBTextField.m */,
-				58B136DC266875480025962F /* YYInputAccessoryView.xib */,
-				58B136DD266875480025962F /* YYKeyboardView.m */,
 				58B136DE266875480025962F /* YYInputAccessoryView.h */,
+				58B136D7266875480025962F /* YYInputAccessoryView.m */,
+				58B136DC266875480025962F /* YYInputAccessoryView.xib */,
 				58B136DF266875480025962F /* YYKBTextField.h */,
+				58B136DB266875480025962F /* YYKBTextField.m */,
+				58B136D8266875480025962F /* YYKeyboardView.h */,
+				58B136DD266875480025962F /* YYKeyboardView.m */,
+				58B136DA266875480025962F /* YYKeyboardView.xib */,
+				58B136D9266875480025962F /* YYKeyButton.h */,
 				58B136E0266875480025962F /* YYKeyButton.m */,
 			);
 			path = YYKeyboard;
