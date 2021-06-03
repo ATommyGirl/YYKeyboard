@@ -1,0 +1,385 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		58A5E052266612B1008AD8D4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A5E051266612B1008AD8D4 /* AppDelegate.m */; };
+		58A5E058266612B1008AD8D4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A5E057266612B1008AD8D4 /* ViewController.m */; };
+		58A5E05B266612B1008AD8D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58A5E059266612B1008AD8D4 /* Main.storyboard */; };
+		58A5E05D266612B2008AD8D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58A5E05C266612B2008AD8D4 /* Assets.xcassets */; };
+		58A5E060266612B2008AD8D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58A5E05E266612B2008AD8D4 /* LaunchScreen.storyboard */; };
+		58A5E063266612B2008AD8D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A5E062266612B2008AD8D4 /* main.m */; };
+		58B136E1266875480025962F /* YYInputAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58B136D7266875480025962F /* YYInputAccessoryView.m */; };
+		58B136E2266875480025962F /* YYKeyboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58B136DA266875480025962F /* YYKeyboardView.xib */; };
+		58B136E3266875480025962F /* YYKBTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 58B136DB266875480025962F /* YYKBTextField.m */; };
+		58B136E4266875480025962F /* YYInputAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58B136DC266875480025962F /* YYInputAccessoryView.xib */; };
+		58B136E5266875480025962F /* YYKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58B136DD266875480025962F /* YYKeyboardView.m */; };
+		58B136E6266875480025962F /* YYKeyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 58B136E0266875480025962F /* YYKeyButton.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		58A5E04D266612B1008AD8D4 /* YYKeyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YYKeyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		58A5E050266612B1008AD8D4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		58A5E051266612B1008AD8D4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		58A5E056266612B1008AD8D4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		58A5E057266612B1008AD8D4 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		58A5E05A266612B1008AD8D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		58A5E05C266612B2008AD8D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		58A5E05F266612B2008AD8D4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		58A5E061266612B2008AD8D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		58A5E062266612B2008AD8D4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		58B136D7266875480025962F /* YYInputAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYInputAccessoryView.m; sourceTree = "<group>"; };
+		58B136D8266875480025962F /* YYKeyboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKeyboardView.h; sourceTree = "<group>"; };
+		58B136D9266875480025962F /* YYKeyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKeyButton.h; sourceTree = "<group>"; };
+		58B136DA266875480025962F /* YYKeyboardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YYKeyboardView.xib; sourceTree = "<group>"; };
+		58B136DB266875480025962F /* YYKBTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKBTextField.m; sourceTree = "<group>"; };
+		58B136DC266875480025962F /* YYInputAccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YYInputAccessoryView.xib; sourceTree = "<group>"; };
+		58B136DD266875480025962F /* YYKeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKeyboardView.m; sourceTree = "<group>"; };
+		58B136DE266875480025962F /* YYInputAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYInputAccessoryView.h; sourceTree = "<group>"; };
+		58B136DF266875480025962F /* YYKBTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYKBTextField.h; sourceTree = "<group>"; };
+		58B136E0266875480025962F /* YYKeyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKeyButton.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		58A5E04A266612B1008AD8D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		58A5E044266612B1008AD8D4 = {
+			isa = PBXGroup;
+			children = (
+				58A5E04F266612B1008AD8D4 /* YYKeyboard */,
+				58A5E04E266612B1008AD8D4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		58A5E04E266612B1008AD8D4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				58A5E04D266612B1008AD8D4 /* YYKeyboard.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		58A5E04F266612B1008AD8D4 /* YYKeyboard */ = {
+			isa = PBXGroup;
+			children = (
+				58A5E050266612B1008AD8D4 /* AppDelegate.h */,
+				58A5E051266612B1008AD8D4 /* AppDelegate.m */,
+				58A5E056266612B1008AD8D4 /* ViewController.h */,
+				58A5E057266612B1008AD8D4 /* ViewController.m */,
+				58B136D6266875480025962F /* YYKeyboard */,
+				58A5E059266612B1008AD8D4 /* Main.storyboard */,
+				58A5E05C266612B2008AD8D4 /* Assets.xcassets */,
+				58A5E05E266612B2008AD8D4 /* LaunchScreen.storyboard */,
+				58A5E061266612B2008AD8D4 /* Info.plist */,
+				58A5E062266612B2008AD8D4 /* main.m */,
+			);
+			path = YYKeyboard;
+			sourceTree = "<group>";
+		};
+		58B136D6266875480025962F /* YYKeyboard */ = {
+			isa = PBXGroup;
+			children = (
+				58B136D7266875480025962F /* YYInputAccessoryView.m */,
+				58B136D8266875480025962F /* YYKeyboardView.h */,
+				58B136D9266875480025962F /* YYKeyButton.h */,
+				58B136DA266875480025962F /* YYKeyboardView.xib */,
+				58B136DB266875480025962F /* YYKBTextField.m */,
+				58B136DC266875480025962F /* YYInputAccessoryView.xib */,
+				58B136DD266875480025962F /* YYKeyboardView.m */,
+				58B136DE266875480025962F /* YYInputAccessoryView.h */,
+				58B136DF266875480025962F /* YYKBTextField.h */,
+				58B136E0266875480025962F /* YYKeyButton.m */,
+			);
+			path = YYKeyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		58A5E04C266612B1008AD8D4 /* YYKeyboard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 58A5E066266612B2008AD8D4 /* Build configuration list for PBXNativeTarget "YYKeyboard" */;
+			buildPhases = (
+				58A5E049266612B1008AD8D4 /* Sources */,
+				58A5E04A266612B1008AD8D4 /* Frameworks */,
+				58A5E04B266612B1008AD8D4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YYKeyboard;
+			productName = YYKeyBoard;
+			productReference = 58A5E04D266612B1008AD8D4 /* YYKeyboard.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		58A5E045266612B1008AD8D4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					58A5E04C266612B1008AD8D4 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+				};
+			};
+			buildConfigurationList = 58A5E048266612B1008AD8D4 /* Build configuration list for PBXProject "YYKeyboard" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 58A5E044266612B1008AD8D4;
+			productRefGroup = 58A5E04E266612B1008AD8D4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				58A5E04C266612B1008AD8D4 /* YYKeyboard */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		58A5E04B266612B1008AD8D4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58A5E060266612B2008AD8D4 /* LaunchScreen.storyboard in Resources */,
+				58B136E2266875480025962F /* YYKeyboardView.xib in Resources */,
+				58A5E05D266612B2008AD8D4 /* Assets.xcassets in Resources */,
+				58B136E4266875480025962F /* YYInputAccessoryView.xib in Resources */,
+				58A5E05B266612B1008AD8D4 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		58A5E049266612B1008AD8D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58B136E6266875480025962F /* YYKeyButton.m in Sources */,
+				58A5E058266612B1008AD8D4 /* ViewController.m in Sources */,
+				58A5E052266612B1008AD8D4 /* AppDelegate.m in Sources */,
+				58B136E1266875480025962F /* YYInputAccessoryView.m in Sources */,
+				58B136E3266875480025962F /* YYKBTextField.m in Sources */,
+				58B136E5266875480025962F /* YYKeyboardView.m in Sources */,
+				58A5E063266612B2008AD8D4 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		58A5E059266612B1008AD8D4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				58A5E05A266612B1008AD8D4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		58A5E05E266612B2008AD8D4 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				58A5E05F266612B2008AD8D4 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		58A5E064266612B2008AD8D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		58A5E065266612B2008AD8D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		58A5E067266612B2008AD8D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NEHH7XQE6G;
+				INFOPLIST_FILE = YYKeyboard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = YY.YYKeyboard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		58A5E068266612B2008AD8D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NEHH7XQE6G;
+				INFOPLIST_FILE = YYKeyboard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = YY.YYKeyboard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		58A5E048266612B1008AD8D4 /* Build configuration list for PBXProject "YYKeyboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58A5E064266612B2008AD8D4 /* Debug */,
+				58A5E065266612B2008AD8D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		58A5E066266612B2008AD8D4 /* Build configuration list for PBXNativeTarget "YYKeyboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58A5E067266612B2008AD8D4 /* Debug */,
+				58A5E068266612B2008AD8D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 58A5E045266612B1008AD8D4 /* Project object */;
+}
