@@ -6,33 +6,64 @@
 //
 
 #import "YYKeyboardView.h"
-#import "YYKeyButton.h"
 
 static CGFloat spaceH = 5.0f;
 static CGFloat spaceV = 8.0f;
+
+@interface YYKeyboardView()
+
+@property (nonatomic, assign) BOOL isCapital;
+@property (nonatomic, strong) dispatch_source_t dis_delete_timer;
+@property (nonatomic, strong) UIView *contentView;
+
+@end
 
 @implementation YYKeyboardView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setBackgroundColor:[UIColor colorWithRed:60/255.0 green:60/255.0 blue:62/255.0 alpha:1]];
-        [self _setLetterView:frame isCapital:NO];
+        CGRect contentFrame = [self _contentFrameOn:frame];
+        [self _setContentView:contentFrame];
+        [self _setLetterView:contentFrame isCapital:NO];
+        [self setBackgroundColor:[UIColor clearColor]];
     }
     
     return self;
 }
 
 - (void)switchKeyboardMode:(YYInputAccessoryViewMode)mode {
-    UIStackView *container = self.subviews.firstObject;
+    UIStackView *container = self.contentView.subviews.firstObject;
     [container removeFromSuperview];
-    if (mode == YYInputAccessoryViewModeAbc) {
-        [self _setLetterView:self.frame isCapital:NO];
-    } else if (mode == YYInputAccessoryViewModeSymbol) {
-        [self _setSymbolView:self.frame];
-    }else {
-        [self _setNumberView:self.frame];
+    CGRect contentFrame = [self _contentFrameOn:self.frame];
+    switch (mode) {
+        case YYInputAccessoryViewModeAbc:
+            [self _setLetterView:contentFrame isCapital:NO];
+            break;
+        case YYInputAccessoryViewModeABC:
+            [self _setLetterView:contentFrame isCapital:YES];
+            break;
+        case YYInputAccessoryViewModeSymbol:
+            [self _setSymbolView:contentFrame];
+            break;
+        case YYInputAccessoryViewModeNumber:
+            [self _setNumberView:contentFrame];
+            break;
+        default:
+            break;
     }
+}
+
+- (void)_setContentView:(CGRect)frame {
+    UIView *content = [[UIView alloc] initWithFrame:frame];
+    [content setBackgroundColor:[UIColor colorWithRed:60/255.0 green:60/255.0 blue:62/255.0 alpha:1]];
+    [self addSubview:content];
+    self.contentView = content;
+}
+
+- (CGRect)_contentFrameOn:(CGRect)frame {
+    CGRect contentFrame = CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame) - (isiPhoneX ? 34 : 0));
+    return contentFrame;;
 }
 
 - (void)_setLetterView:(CGRect)frame isCapital:(BOOL)isCapital {
@@ -48,20 +79,17 @@ static CGFloat spaceV = 8.0f;
                   @[@"a", @"s", @"d", @"f", @"g", @"h", @"j", @"k", @"l"],/*Caps Lock*/
                   @[@"z", @"x", @"c", @"v", @"b", @"n", @"m"]];/*Space & Delete*/
     }
-    [self _setAbcView:frame item:items];
+    [self _setAbcView:frame item:items isCapital:isCapital];
 }
 
-- (void)_setAbcView:(CGRect)frame item:(NSArray *)items {
-    //Caps Lock & Space & Delete 单独插入.
+- (void)_setAbcView:(CGRect)frame item:(NSArray *)items isCapital:(BOOL)isCapital {
     CGFloat itemSpace = 5;
     UIStackView *containerView = [self _setMainContainer:frame item:items itemSpace:itemSpace];
     
-    YYKeyButton *capsLock = [[YYKeyButton alloc] initWithFrame:CGRectZero];
-    [capsLock setImage:[UIImage imageNamed:@"CapsLock"] forState:(UIControlStateNormal)];
-    [capsLock addTarget:self action:@selector(_didSelectCapsLock:) forControlEvents:(UIControlEventTouchUpInside)];
+    //Caps Lock & Space & Delete 单独插入.
+    YYKeyButton *capsLock = [self _capsLock:isCapital];
     UIStackView *line3SubContainer = containerView.arrangedSubviews[2];
     [line3SubContainer insertArrangedSubview:capsLock atIndex:0];
-
     CGSize estimateKeySize = [self _estimateKeySize:frame itemSpace:itemSpace];
     CGFloat estimateWidth  = estimateKeySize.width;
     CGFloat estimateHeight = estimateKeySize.height;
@@ -73,7 +101,7 @@ static CGFloat spaceV = 8.0f;
     [line4SubContainer insertArrangedSubview:space atIndex:0];
     [line4SubContainer addArrangedSubview:delete];
     
-    [self addSubview:containerView];
+    [self.contentView addSubview:containerView];
 }
 
 - (void)_setSymbolView:(CGRect)frame {
@@ -97,18 +125,21 @@ static CGFloat spaceV = 8.0f;
     [line4SubContainer addArrangedSubview:space];
     [line4SubContainer addArrangedSubview:delete];
 
-    [self addSubview:containerView];
+    [self.contentView addSubview:containerView];
 }
 
 - (void)_setNumberView:(CGRect)frame {
     NSArray *numbers = @[@[@"1", @"2", @"3"],
                          @[@"4", @"5", @"6"],
                          @[@"7", @"8", @"9"],
-                         @[@".", @"0", @""]];
+                         @[@".", @"0"]];/*Delete*/
     CGFloat itemSpace = 8;
     UIStackView *containerView = [self _setMainContainer:frame item:numbers itemSpace:itemSpace];
+    YYKeyButton *delete = [self _deleteKey:CGSizeZero];
+    UIStackView *line4SubContainer = containerView.arrangedSubviews.lastObject;
+    [line4SubContainer addArrangedSubview:delete];
     
-    [self addSubview:containerView];
+    [self.contentView addSubview:containerView];
 }
 
 - (UIStackView *)_setMainContainer:(CGRect)frame item:(NSArray *)items itemSpace:(CGFloat)itemSpace {
@@ -149,9 +180,20 @@ static CGFloat spaceV = 8.0f;
     return containerView;
 }
 
+- (YYKeyButton *)_capsLock:(BOOL)isCapital {
+    YYKeyButton *capsLock = [[YYKeyButton alloc] initWithFrame:CGRectZero];
+    capsLock.type = YYKeyButtonTypeCaps;
+    [capsLock setImage:[UIImage imageNamed:@"CapsLock"] forState:(UIControlStateNormal)];
+    [capsLock addTarget:self action:@selector(_didSelectCapsLock:) forControlEvents:(UIControlEventTouchUpInside)];
+    [capsLock setSelectStatus:isCapital];
+    
+    return capsLock;
+}
+
 - (YYKeyButton *)_spaceKey:(CGSize)size {
     CGRect frame = CGRectMake(0, 0, size.width, size.height);
     YYKeyButton *space = [[YYKeyButton alloc] initWithFrame:frame];
+    space.type = YYKeyButtonTypeSpace;
     [space setImage:[UIImage imageNamed:@"Space"] forState:(UIControlStateNormal)];
     [space addTarget:self action:@selector(_didSelectSpace:) forControlEvents:(UIControlEventTouchUpInside)];
 
@@ -161,10 +203,54 @@ static CGFloat spaceV = 8.0f;
 - (YYKeyButton *)_deleteKey:(CGSize)size {
     CGRect frame = CGRectMake(0, 0, size.width, size.height);
     YYKeyButton *delete = [[YYKeyButton alloc] initWithFrame:frame];
+    delete.type = YYKeyButtonTypeDelete;
     [delete setImage:[UIImage imageNamed:@"Delete"] forState:(UIControlStateNormal)];
     [delete addTarget:self action:@selector(_didSelectDelete:) forControlEvents:(UIControlEventTouchUpInside)];
+
+    //加个 longPressGesture ，设置如下：
+    UILongPressGestureRecognizer *pahGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(_longPressGestureRecognizerStateChanged:)];
+    pahGestureRecognizer.minimumPressDuration = 0.5;
+    [delete addGestureRecognizer:pahGestureRecognizer];
     
     return delete;
+}
+
+- (void)_longPressGestureRecognizerStateChanged:(UIGestureRecognizer *)gestureRecognizer {
+    YYKeyButton *delete = (YYKeyButton *)gestureRecognizer.view;
+    [delete setSelectStatus:YES];
+    switch (gestureRecognizer.state) {
+        case UIGestureRecognizerStateBegan:
+        {
+            [self _dis_delete_timer];
+            break;
+        }
+        case UIGestureRecognizerStateEnded:
+        {
+            dispatch_source_cancel(_dis_delete_timer);
+            _dis_delete_timer = nil;
+            [delete setSelectStatus:NO];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)_dis_delete_timer {
+    if (!_dis_delete_timer) {
+        dispatch_queue_t global = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, global);
+        
+        dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, .1 * NSEC_PER_SEC, 0);
+        dispatch_source_set_event_handler(timer, ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self _deleteAction];
+            });
+        });
+        
+        dispatch_resume(timer);
+        _dis_delete_timer = timer;
+    }
 }
 
 - (CGRect)_estimateKeyFrame:(CGRect)superFrame itemSpace:(CGFloat)itemSpace {
@@ -185,23 +271,37 @@ static CGFloat spaceV = 8.0f;
     NSString *text = sender.titleLabel.text;
     NSLog(@"didSelectItem: %@", text);
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_KeyboardView:didSelectKey:)]) {
-        [self.delegate yy_KeyboardView:self didSelectKey:text];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_KeyboardView:didSelectKey:text:)]) {
+        [self.delegate yy_KeyboardView:self didSelectKey:(YYKeyButtonTypeNormal) text:text];
     }
 }
 
 - (void)_didSelectSpace:(YYKeyButton *)sender {
-    NSLog(@"didSelectSpace: \" \"");
-
+    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_KeyboardView:didSelectKey:text:)]) {
+        [self.delegate yy_KeyboardView:self didSelectKey:(YYKeyButtonTypeSpace) text:@" "];
+    }
 }
 
 - (void)_didSelectDelete:(YYKeyButton *)sender {
-    NSLog(@"didSelectDelete");
+    [self _deleteAction];
+}
+
+- (void)_deleteAction {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_KeyboardView:didSelectKey:text:)]) {
+        [self.delegate yy_KeyboardView:self didSelectKey:(YYKeyButtonTypeDelete) text:@""];
+    }
 }
 
 - (void)_didSelectCapsLock:(YYKeyButton *)sender {
-    [sender setSelectStatus:!sender.isSelected];
-    NSLog(@"didSelectCapsLock: %d", sender.isSelected);
+    self.isCapital = !self.isCapital;
+    [self switchKeyboardMode:self.isCapital];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_KeyboardView:didSelectKey:text:)]) {
+        [self.delegate yy_KeyboardView:self didSelectKey:(YYKeyButtonTypeCaps) text:@""];
+    }
+}
+
+- (void)dealloc {
+    NSLog(@"YYKeyboardView dealloc.");
 }
 
 @end

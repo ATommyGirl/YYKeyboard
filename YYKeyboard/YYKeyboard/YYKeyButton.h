@@ -7,7 +7,17 @@
 
 #import <UIKit/UIKit.h>
 
+
+typedef NS_ENUM(NSUInteger, YYKeyButtonType) {
+    YYKeyButtonTypeNormal,
+    YYKeyButtonTypeSpace,
+    YYKeyButtonTypeDelete,
+    YYKeyButtonTypeCaps
+};
+
 @interface YYKeyButton : UIButton
+
+@property (nonatomic, assign) YYKeyButtonType type;
 
 - (void)setSelectStatus:(BOOL)selected;
 

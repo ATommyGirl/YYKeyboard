@@ -41,6 +41,13 @@
     }
 }
 
+- (void)setHighlighted:(BOOL)highlighted {
+    [super setHighlighted:highlighted];
+    UIColor *baseColor = [UIColor colorWithRed:119/255.0 green:119/255.0 blue:119/255.0 alpha:1];
+    UIColor *highColor = _type != YYKeyButtonTypeNormal ? [UIColor whiteColor] : [UIColor lightGrayColor];
+    self.backgroundColor = highlighted ? highColor : baseColor;
+}
+
 - (CGSize)intrinsicContentSize {
     return self.frame.size;
 }

@@ -9,6 +9,7 @@
 
 typedef NS_ENUM(NSInteger, YYInputAccessoryViewMode){
     YYInputAccessoryViewModeAbc = 0,
+    YYInputAccessoryViewModeABC,
     YYInputAccessoryViewModeSymbol,
     YYInputAccessoryViewModeNumber
 };

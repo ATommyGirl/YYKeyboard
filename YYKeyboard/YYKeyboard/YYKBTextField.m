@@ -7,11 +7,7 @@
 
 #import "YYKBTextField.h"
 #import "YYKeyboardView.h"
-
-#define isiPhoneX ([[UIScreen mainScreen] bounds].size.height >= 812)
-
-#define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
-#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+#import "UITextField+ExtentRange.h"
 
 @interface YYKBTextField()<YYKeyboardViewDelegate, YYInputAccessoryViewDelegate>
 
@@ -22,7 +18,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self _setKeyboard];
+        [self _setup];
     }
     
     return self;
@@ -30,11 +26,17 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self _setKeyboard];
+    [self _setup];
+}
+
+- (void)_setup {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_textFieldTextDidChange) name:UITextFieldTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_textFieldTextDidBeginEditing) name:UITextFieldTextDidBeginEditingNotification object:nil];
 }
 
 - (void)_setKeyboard {
-    YYKeyboardView *keyboard = [[YYKeyboardView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 250 - (isiPhoneX ? 34 : 0), SCREEN_WIDTH, 250)];
+    CGRect keyboardFrame  = CGRectMake(0, 0, SCREEN_WIDTH, MAX(210, SCREEN_HEIGHT * 0.3) + (isiPhoneX ? 34 : 0));
+    YYKeyboardView *keyboard = [[YYKeyboardView alloc] initWithFrame:keyboardFrame];
     keyboard.delegate = self;
     self.inputView = keyboard;
     
@@ -43,8 +45,39 @@
     self.inputAccessoryView = inputAccessoryView;
 }
 
-- (void)yy_KeyboardView:(YYKeyboardView *)keyboard didSelectKey:(NSString *)text {
-    self.text = [self.text stringByAppendingString:text];
+- (void)yy_KeyboardView:(YYKeyboardView *)keyboard didSelectKey:(YYKeyButtonType)type text:(NSString *)text {
+    NSRange range = [self selectedRange];
+    if (range.location == NSNotFound || range.length == NSNotFound) {
+        return;
+    }
+    
+    switch (type) {
+        case YYKeyButtonTypeNormal:
+        case YYKeyButtonTypeSpace:
+        {
+            self.text = [self.text stringByReplacingCharactersInRange:range withString:text];
+            [self setSelectedRange:NSMakeRange(range.location + text.length, 0)];
+            break;
+        }
+        case YYKeyButtonTypeDelete:
+        {
+            if (range.length > 0) {
+                //Slected part text.
+                self.text = [self.text stringByReplacingCharactersInRange:range withString:@""];
+                [self setSelectedRange:NSMakeRange(range.location, 0)];
+                return;
+            }else if (range.location > 0) {
+                self.text = [self.text stringByReplacingCharactersInRange:NSMakeRange(range.location - 1, 1) withString:@""];
+                [self setSelectedRange:NSMakeRange(range.location - 1, 0)];
+            }else {
+                //NSLog(@"Delete range: {%lu %lu}", (unsigned long)range.location, (unsigned long)range.length);
+            }
+            
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 - (void)yy_inputAccessoryView:(YYInputAccessoryView *)inputAccessoryView didSelectDone:(BOOL)done {
@@ -54,6 +87,17 @@
 - (void)yy_inputAccessoryView:(YYInputAccessoryView *)inputAccessoryView didSwitchMode:(YYInputAccessoryViewMode)mode {
     YYKeyboardView *keyboard = (YYKeyboardView *)self.inputView;
     [keyboard switchKeyboardMode:mode];
+}
+
+- (void)_textFieldTextDidChange {
+}
+
+- (void)_textFieldTextDidBeginEditing {
+    [self _setKeyboard];
+}
+
+- (void)dealloc {
+    NSLog(@"YYKBTextField dealloc.");
 }
 
 @end
