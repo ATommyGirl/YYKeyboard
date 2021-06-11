@@ -129,10 +129,8 @@ static CGFloat spaceV = 8.0f;
 }
 
 - (void)_setNumberView:(CGRect)frame {
-    NSArray *numbers = @[@[@"1", @"2", @"3"],
-                         @[@"4", @"5", @"6"],
-                         @[@"7", @"8", @"9"],
-                         @[@".", @"0"]];/*Delete*/
+    NSArray *numbers = [self _numbers:YES];
+    
     CGFloat itemSpace = 8;
     UIStackView *containerView = [self _setMainContainer:frame item:numbers itemSpace:itemSpace];
     YYKeyButton *delete = [self _deleteKey:CGSizeZero];
@@ -140,6 +138,48 @@ static CGFloat spaceV = 8.0f;
     [line4SubContainer addArrangedSubview:delete];
     
     [self.contentView addSubview:containerView];
+}
+
+- (NSArray *)_numbers:(BOOL)isUpset {
+    if (isUpset) {
+        NSArray *sortNumbers = @[@"0", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9"];
+        sortNumbers = [sortNumbers sortedArrayUsingComparator:^NSComparisonResult(NSString *str1, NSString *str2) {
+            int seed = arc4random_uniform(2);
+            if (seed) {
+                return [str1 compare:str2];
+            } else {
+                return [str2 compare:str1];
+            }
+        }];
+        
+        NSMutableArray<NSMutableArray *> *numbers = [NSMutableArray arrayWithCapacity:4];
+        [self _splitArray:sortNumbers count:0 lineCount:3 result:numbers];
+        [numbers[3] insertObject:@"." atIndex:0];
+        
+        return numbers.mutableCopy;
+    }
+    return @[@[@"1", @"2", @"3"],
+             @[@"4", @"5", @"6"],
+             @[@"7", @"8", @"9"],
+             @[@".", @"0"]];//Delete
+}
+
+- (void)_splitArray:(NSArray *)source count:(NSInteger)count lineCount:(NSInteger)lineC result:(NSMutableArray *)result {
+    NSMutableArray * tempArray = [NSMutableArray array];
+    while (count < source.count) {
+        [tempArray addObject:source[count]];
+        count++;
+
+        if (count % lineC == 0) {
+            break;
+        }
+        if (count == source.count) {
+            [result addObject:tempArray];
+            return;
+        }
+    }
+    [result addObject:tempArray];
+    [self _splitArray:source count:count lineCount:3 result:result];
 }
 
 - (UIStackView *)_setMainContainer:(CGRect)frame item:(NSArray *)items itemSpace:(CGFloat)itemSpace {
