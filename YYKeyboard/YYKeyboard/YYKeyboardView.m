@@ -19,6 +19,19 @@ static CGFloat spaceV = 8.0f;
 
 @implementation YYKeyboardView
 
+- (instancetype)initWithFrame:(CGRect)frame style:(YYKeyboardViewStyle)style {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.style = style;
+        CGRect contentFrame = [self _contentFrameOn:frame];
+        [self _setContentView:contentFrame];
+        [self _setLetterView:contentFrame isCapital:NO];
+        [self setBackgroundColor:[UIColor clearColor]];
+    }
+    
+    return self;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -80,7 +93,50 @@ static CGFloat spaceV = 8.0f;
     }
     [self _setAbcView:frame item:items isCapital:isCapital];
 }
+#pragma mark - Style
+- (UIColor *)_keyBackgroundColor {
+    UIColor *color = [UIColor colorWithRed:119/255.0 green:119/255.0 blue:119/255.0 alpha:1];
+    switch (self.style) {
+        case YYKeyboardViewStyleDark:
+        case YYKeyboardViewStyleLikeSystemDark:
+            break;
+        case YYKeyboardViewStyleLight:
+        case YYKeyboardViewStyleLikeSystemLight:
+            color = [UIColor whiteColor];
+            break;
+    }
+    return color;
+}
 
+- (UIColor *)_keyboardBackgroundColor {
+    UIColor *color = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:62/255.0 alpha:1];
+    switch (self.style) {
+        case YYKeyboardViewStyleDark:
+        case YYKeyboardViewStyleLikeSystemDark:
+            break;
+        case YYKeyboardViewStyleLight:
+        case YYKeyboardViewStyleLikeSystemLight:
+            color = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1];
+            break;
+    }
+    return color;
+}
+
+- (UIColor *)_keyColor {
+    UIColor *color = [UIColor whiteColor];
+    switch (self.style) {
+        case YYKeyboardViewStyleDark:
+        case YYKeyboardViewStyleLikeSystemDark:
+            break;
+        case YYKeyboardViewStyleLight:
+        case YYKeyboardViewStyleLikeSystemLight:
+            color = [UIColor blackColor];
+            break;
+    }
+    return color;
+}
+
+#pragma mark - UI
 - (void)_setAbcView:(CGRect)frame item:(NSArray *)items isCapital:(BOOL)isCapital {
     CGFloat itemSpace = 5;
     UIStackView *containerView = [self _setMainContainer:frame item:items itemSpace:itemSpace];

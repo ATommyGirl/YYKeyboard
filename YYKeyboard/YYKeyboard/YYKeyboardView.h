@@ -14,6 +14,13 @@
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 
+typedef NS_ENUM(NSUInteger, YYKeyboardViewStyle) {
+    YYKeyboardViewStyleDark = 0,
+    YYKeyboardViewStyleLight,
+    YYKeyboardViewStyleLikeSystemDark,
+    YYKeyboardViewStyleLikeSystemLight
+};
+
 @class YYKeyboardView;
 @protocol YYKeyboardViewDelegate <NSObject>
 @optional
@@ -24,8 +31,10 @@
 
 @interface YYKeyboardView : UIView
 
-@property (weak, nonatomic) id<YYKeyboardViewDelegate> delegate;
+@property (nonatomic, weak) id<YYKeyboardViewDelegate> delegate;
+@property (nonatomic, assign) YYKeyboardViewStyle style;
 
+- (instancetype)initWithFrame:(CGRect)frame style:(YYKeyboardViewStyle)style;
 - (void)switchKeyboardMode:(YYInputAccessoryViewMode)mode;
 
 @end

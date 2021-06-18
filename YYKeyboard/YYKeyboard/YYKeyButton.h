@@ -7,7 +7,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 typedef NS_ENUM(NSUInteger, YYKeyButtonType) {
     YYKeyButtonTypeNormal,
     YYKeyButtonTypeSpace,
@@ -18,7 +17,7 @@ typedef NS_ENUM(NSUInteger, YYKeyButtonType) {
 @interface YYKeyButton : UIButton
 
 @property (nonatomic, assign) YYKeyButtonType type;
-
-- (void)setSelectStatus:(BOOL)selected;
+@property (nonatomic, strong) UIColor *normalBackgroundColor;
+@property (nonatomic, strong) UIColor *selectedBackgroundColor;
 
 @end

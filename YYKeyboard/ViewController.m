@@ -10,7 +10,7 @@
 
 @interface ViewController ()
 
-@property (weak, nonatomic) IBOutlet YYKBTextField *textField0;
+@property (weak, nonatomic) IBOutlet UITextField *textField0;
 @property (weak, nonatomic) IBOutlet YYKBTextField *textField;
 
 @end
