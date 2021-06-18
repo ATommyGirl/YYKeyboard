@@ -12,7 +12,6 @@ static CGFloat spaceV = 8.0f;
 
 @interface YYKeyboardView()
 
-@property (nonatomic, assign) BOOL isCapital;
 @property (nonatomic, strong) dispatch_source_t dis_delete_timer;
 @property (nonatomic, strong) UIView *contentView;
 
@@ -225,7 +224,7 @@ static CGFloat spaceV = 8.0f;
     capsLock.type = YYKeyButtonTypeCaps;
     [capsLock setImage:[UIImage imageNamed:@"CapsLock"] forState:(UIControlStateNormal)];
     [capsLock addTarget:self action:@selector(_didSelectCapsLock:) forControlEvents:(UIControlEventTouchUpInside)];
-    [capsLock setSelectStatus:isCapital];
+    [capsLock setSelected:isCapital];
     
     return capsLock;
 }
@@ -257,7 +256,7 @@ static CGFloat spaceV = 8.0f;
 
 - (void)_longPressGestureRecognizerStateChanged:(UIGestureRecognizer *)gestureRecognizer {
     YYKeyButton *delete = (YYKeyButton *)gestureRecognizer.view;
-    [delete setSelectStatus:YES];
+    [delete setSelected:YES];
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:
         {
@@ -268,7 +267,7 @@ static CGFloat spaceV = 8.0f;
         {
             dispatch_source_cancel(_dis_delete_timer);
             _dis_delete_timer = nil;
-            [delete setSelectStatus:NO];
+            [delete setSelected:NO];
             break;
         }
         default:
@@ -333,8 +332,21 @@ static CGFloat spaceV = 8.0f;
 }
 
 - (void)_didSelectCapsLock:(YYKeyButton *)sender {
-    self.isCapital = !self.isCapital;
-    [self switchKeyboardMode:self.isCapital];
+    sender.selected = !sender.isSelected;
+    
+    //Set ABC or abc.
+    UIStackView *container = self.contentView.subviews.firstObject;
+    for (UIStackView *subContainer in container.arrangedSubviews) {
+        for (YYKeyButton *key in subContainer.arrangedSubviews) {
+            NSString *currentTitle = key.currentTitle;
+            if (sender.isSelected) {
+                [key setTitle:[currentTitle uppercaseString] forState:(UIControlStateNormal)];
+            }else {
+                [key setTitle:[currentTitle lowercaseString] forState:(UIControlStateNormal)];
+            }
+        }
+    }
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(yy_KeyboardView:didSelectKey:text:)]) {
         [self.delegate yy_KeyboardView:self didSelectKey:(YYKeyButtonTypeCaps) text:@""];
     }
