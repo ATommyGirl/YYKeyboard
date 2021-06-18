@@ -12,8 +12,8 @@
 - (instancetype)initWithFrame:(CGRect)frame style:(YYKeyboardStyle)style {
     self = [super initWithFrame:frame];
     if (self) {
-        [self _initStyle:style];
-        [self _initUI];
+        [self initStyle:style];
+        [self initUI];
     }
     
     return self;
@@ -22,8 +22,8 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self _initStyle:(YYKeyboardStyleDark)];
-        [self _initUI];
+        [self initStyle:(YYKeyboardStyleDark)];
+        [self initUI];
     }
     
     return self;
@@ -31,10 +31,10 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self _initUI];
+    [self initUI];
 }
 
-- (void)_initStyle:(YYKeyboardStyle)style {
+- (void)initStyle:(YYKeyboardStyle)style {
     self.normalBackgroundColor = [YYKeyboard keyBackgroundColor:style];
     self.selectedBackgroundColor = [YYKeyboard keySelectedBackgroundColor:style];
     self.highlightedBackgroundColor = [YYKeyboard keyHighlightedBackgroundColor:style];
@@ -44,7 +44,7 @@
     [self setTitleColor:[YYKeyboard titleColor:style] forState:(UIControlStateNormal)];
 }
 
-- (void)_initUI {
+- (void)initUI {
     self.layer.cornerRadius = 6;
     self.layer.masksToBounds = YES;
     self.adjustsImageWhenHighlighted = NO;

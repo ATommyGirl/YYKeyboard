@@ -18,7 +18,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self _setup];
+        [self setup];
     }
     
     return self;
@@ -26,15 +26,15 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self _setup];
+    [self setup];
 }
 
-- (void)_setup {
+- (void)setup {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_textFieldTextDidChange) name:UITextFieldTextDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_textFieldTextDidBeginEditing) name:UITextFieldTextDidBeginEditingNotification object:nil];
 }
 
-- (void)_setKeyboard {
+- (void)setKeyboard {
     CGRect keyboardFrame  = CGRectMake(0, 0, SCREEN_WIDTH, MAX(210, SCREEN_HEIGHT * 0.305) + (isiPhoneX ? 34 : 0));
     YYKeyboardView *keyboard = [[YYKeyboardView alloc] initWithFrame:keyboardFrame style:(YYKeyboardStyleLight)];
     keyboard.delegate = self;
@@ -81,11 +81,11 @@
     [self endEditing:YES];
 }
 
-- (void)_textFieldTextDidChange {
+- (void)textFieldTextDidChange {
 }
 
-- (void)_textFieldTextDidBeginEditing {
-    [self _setKeyboard];
+- (void)textFieldTextDidBeginEditing {
+    [self setKeyboard];
 }
 
 - (void)dealloc {

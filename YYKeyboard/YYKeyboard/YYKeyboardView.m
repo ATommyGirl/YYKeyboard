@@ -24,9 +24,9 @@ static CGFloat spaceV = 8.0f;
     self = [super initWithFrame:frame];
     if (self) {
         self.style = style;
-        CGRect contentFrame = [self _contentFrameOn:frame];
+        CGRect contentFrame = [self contentFrameOn:frame];
         [self _setContentView:contentFrame];
-        [self _setLetterView:contentFrame isCapital:NO];
+        [self setLetterView:contentFrame isCapital:NO];
         [self setBackgroundColor:[UIColor clearColor]];
     }
     
@@ -36,9 +36,9 @@ static CGFloat spaceV = 8.0f;
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        CGRect contentFrame = [self _contentFrameOn:frame];
+        CGRect contentFrame = [self contentFrameOn:frame];
         [self _setContentView:contentFrame];
-        [self _setLetterView:contentFrame isCapital:NO];
+        [self setLetterView:contentFrame isCapital:NO];
         [self setBackgroundColor:[UIColor clearColor]];
     }
     
@@ -48,19 +48,19 @@ static CGFloat spaceV = 8.0f;
 - (void)switchKeyboardMode:(YYInputAccessoryViewMode)mode {
     UIStackView *container = self.contentView.subviews.firstObject;
     [container removeFromSuperview];
-    CGRect contentFrame = [self _contentFrameOn:self.frame];
+    CGRect contentFrame = [self contentFrameOn:self.frame];
     switch (mode) {
         case YYInputAccessoryViewModeAbc:
-            [self _setLetterView:contentFrame isCapital:NO];
+            [self setLetterView:contentFrame isCapital:NO];
             break;
         case YYInputAccessoryViewModeABC:
-            [self _setLetterView:contentFrame isCapital:YES];
+            [self setLetterView:contentFrame isCapital:YES];
             break;
         case YYInputAccessoryViewModeSymbol:
-            [self _setSymbolView:contentFrame];
+            [self setSymbolView:contentFrame];
             break;
         case YYInputAccessoryViewModeNumber:
-            [self _setNumberView:contentFrame];
+            [self setNumberView:contentFrame];
             break;
         default:
             break;
@@ -74,12 +74,12 @@ static CGFloat spaceV = 8.0f;
     self.contentView = content;
 }
 
-- (CGRect)_contentFrameOn:(CGRect)frame {
+- (CGRect)contentFrameOn:(CGRect)frame {
     CGRect contentFrame = CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame) - (isiPhoneX ? (34 + 15) : 0));
     return contentFrame;;
 }
 
-- (void)_setLetterView:(CGRect)frame isCapital:(BOOL)isCapital {
+- (void)setLetterView:(CGRect)frame isCapital:(BOOL)isCapital {
     NSArray *items;
     if (isCapital) {
         items = @[@[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"0"],
@@ -92,24 +92,24 @@ static CGFloat spaceV = 8.0f;
                   @[@"a", @"s", @"d", @"f", @"g", @"h", @"j", @"k", @"l"],/*Caps Lock*/
                   @[@"z", @"x", @"c", @"v", @"b", @"n", @"m"]];/*Space & Delete*/
     }
-    [self _setAbcView:frame item:items isCapital:isCapital];
+    [self setAbcView:frame item:items isCapital:isCapital];
 }
 
 #pragma mark - UI
-- (void)_setAbcView:(CGRect)frame item:(NSArray *)items isCapital:(BOOL)isCapital {
+- (void)setAbcView:(CGRect)frame item:(NSArray *)items isCapital:(BOOL)isCapital {
     CGFloat itemSpace = 5;
-    UIStackView *containerView = [self _setMainContainer:frame item:items itemSpace:itemSpace];
+    UIStackView *containerView = [self setMainContainer:frame item:items itemSpace:itemSpace];
     
     //Caps Lock & Space & Delete 单独插入.
-    YYKeyButton *capsLock = [self _capsLock:isCapital];
+    YYKeyButton *capsLock = [self capsLock:isCapital];
     UIStackView *line3SubContainer = containerView.arrangedSubviews[2];
     [line3SubContainer insertArrangedSubview:capsLock atIndex:0];
-    CGSize estimateKeySize = [self _estimateKeySize:frame itemSpace:itemSpace];
+    CGSize estimateKeySize = [self estimateKeySize:frame itemSpace:itemSpace];
     CGFloat estimateWidth  = estimateKeySize.width;
     CGFloat estimateHeight = estimateKeySize.height;
     CGFloat deleteWidth    = estimateWidth + (estimateWidth - itemSpace)*0.5 + spaceH;
-    YYKeyButton *space  = [self _spaceKey:CGSizeMake(deleteWidth, estimateHeight)];
-    YYKeyButton *delete = [self _deleteKey:CGSizeMake(deleteWidth, estimateHeight)];
+    YYKeyButton *space  = [self spaceKey:CGSizeMake(deleteWidth, estimateHeight)];
+    YYKeyButton *delete = [self deleteKey:CGSizeMake(deleteWidth, estimateHeight)];
     UIStackView *line4SubContainer = containerView.arrangedSubviews[3];
     line4SubContainer.distribution = UIStackViewDistributionFillProportionally;
     [line4SubContainer insertArrangedSubview:space atIndex:0];
@@ -118,22 +118,22 @@ static CGFloat spaceV = 8.0f;
     [self.contentView addSubview:containerView];
 }
 
-- (void)_setSymbolView:(CGRect)frame {
+- (void)setSymbolView:(CGRect)frame {
     NSArray *symbols = @[@[@"&", @"\"", @";", @"^", @",", @"|", @"$", @"*", @":", @"'"],
                          @[@"?", @"{", @"[", @"~", @"#", @"}", @".", @"]", @"\\", @"!"],
                          @[@"(", @"%", @"-", @"_", @"+", @"/", @")", @"=", @"<", @"`"],
                          @[@">", @"@"]];/*Space & Delete*/
 
     CGFloat itemSpace = 5;
-    UIStackView *containerView = [self _setMainContainer:frame item:symbols itemSpace:itemSpace];
+    UIStackView *containerView = [self setMainContainer:frame item:symbols itemSpace:itemSpace];
     
     //Space & Delete 单独插入.
-    CGSize estimateKeySize = [self _estimateKeySize:frame itemSpace:itemSpace];
+    CGSize estimateKeySize = [self estimateKeySize:frame itemSpace:itemSpace];
     CGFloat estimateWidth  = estimateKeySize.width;
     CGFloat estimateHeight = estimateKeySize.height;
     CGFloat deleteWidth    = estimateWidth + (estimateWidth - itemSpace)*0.5 + spaceH;
-    YYKeyButton *space  = [self _spaceKey:CGSizeMake(deleteWidth + (estimateWidth + itemSpace) * 5, estimateHeight)];
-    YYKeyButton *delete = [self _deleteKey:CGSizeMake(deleteWidth, estimateHeight)];
+    YYKeyButton *space  = [self spaceKey:CGSizeMake(deleteWidth + (estimateWidth + itemSpace) * 5, estimateHeight)];
+    YYKeyButton *delete = [self deleteKey:CGSizeMake(deleteWidth, estimateHeight)];
     UIStackView *line4SubContainer = containerView.arrangedSubviews.lastObject;
     line4SubContainer.distribution = UIStackViewDistributionFillProportionally;
     [line4SubContainer addArrangedSubview:space];
@@ -142,19 +142,19 @@ static CGFloat spaceV = 8.0f;
     [self.contentView addSubview:containerView];
 }
 
-- (void)_setNumberView:(CGRect)frame {
-    NSArray *numbers = [self _numbers:YES];
+- (void)setNumberView:(CGRect)frame {
+    NSArray *numbers = [self numbers:YES];
     
     CGFloat itemSpace = 8;
-    UIStackView *containerView = [self _setMainContainer:frame item:numbers itemSpace:itemSpace];
-    YYKeyButton *delete = [self _deleteKey:CGSizeZero];
+    UIStackView *containerView = [self setMainContainer:frame item:numbers itemSpace:itemSpace];
+    YYKeyButton *delete = [self deleteKey:CGSizeZero];
     UIStackView *line4SubContainer = containerView.arrangedSubviews.lastObject;
     [line4SubContainer addArrangedSubview:delete];
     
     [self.contentView addSubview:containerView];
 }
 
-- (NSArray *)_numbers:(BOOL)isUpset {
+- (NSArray *)numbers:(BOOL)isUpset {
     if (isUpset) {
         NSArray *sortNumbers = @[@"0", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9"];
         sortNumbers = [sortNumbers sortedArrayUsingComparator:^NSComparisonResult(NSString *str1, NSString *str2) {
@@ -167,7 +167,7 @@ static CGFloat spaceV = 8.0f;
         }];
         
         NSMutableArray<NSMutableArray *> *numbers = [NSMutableArray arrayWithCapacity:4];
-        [self _splitArray:sortNumbers count:0 lineCount:3 result:numbers];
+        [self splitArray:sortNumbers count:0 lineCount:3 result:numbers];
         [numbers[3] insertObject:@"." atIndex:0];
         
         return numbers.mutableCopy;
@@ -178,7 +178,7 @@ static CGFloat spaceV = 8.0f;
              @[@".", @"0"]];//Delete
 }
 
-- (void)_splitArray:(NSArray *)source count:(NSInteger)count lineCount:(NSInteger)lineC result:(NSMutableArray *)result {
+- (void)splitArray:(NSArray *)source count:(NSInteger)count lineCount:(NSInteger)lineC result:(NSMutableArray *)result {
     NSMutableArray * tempArray = [NSMutableArray array];
     while (count < source.count) {
         [tempArray addObject:source[count]];
@@ -193,10 +193,10 @@ static CGFloat spaceV = 8.0f;
         }
     }
     [result addObject:tempArray];
-    [self _splitArray:source count:count lineCount:3 result:result];
+    [self splitArray:source count:count lineCount:3 result:result];
 }
 
-- (UIStackView *)_setMainContainer:(CGRect)frame item:(NSArray *)items itemSpace:(CGFloat)itemSpace {
+- (UIStackView *)setMainContainer:(CGRect)frame item:(NSArray *)items itemSpace:(CGFloat)itemSpace {
     CGRect frame0 = CGRectMake(spaceH, spaceV, CGRectGetWidth(frame) - spaceH*2, CGRectGetHeight(frame) - spaceV*2);
     UIStackView *containerView = ({
         containerView = [[UIStackView alloc] initWithFrame:frame0];
@@ -206,10 +206,10 @@ static CGFloat spaceV = 8.0f;
         containerView;
     });
     
-    CGRect itemFrame = [self _estimateKeyFrame:frame itemSpace:itemSpace];
+    CGRect itemFrame = [self estimateKeyFrame:frame itemSpace:itemSpace];
     for (int i = 0; i < items.count; i++) {
         NSArray *line = items[i];
-        UIStackView *subContainer = [self _setSubContainer:itemSpace];
+        UIStackView *subContainer = [self setSubContainer:itemSpace];
         for (int j = 0; j < line.count; j++) {
             YYKeyButton *key = [[YYKeyButton alloc] initWithFrame:itemFrame style:self.style];
             [key setTitle:line[j] forState:(UIControlStateNormal)];
@@ -222,7 +222,7 @@ static CGFloat spaceV = 8.0f;
     return containerView;
 }
 
-- (UIStackView *)_setSubContainer:(CGFloat)space {
+- (UIStackView *)setSubContainer:(CGFloat)space {
     UIStackView *containerView = ({
         containerView = [[UIStackView alloc] initWithFrame:CGRectZero];
         containerView.axis = UILayoutConstraintAxisHorizontal;
@@ -234,7 +234,7 @@ static CGFloat spaceV = 8.0f;
     return containerView;
 }
 
-- (YYKeyButton *)_capsLock:(BOOL)isCapital {
+- (YYKeyButton *)capsLock:(BOOL)isCapital {
     YYKeyButton *capsLock = [[YYKeyButton alloc] initWithFrame:CGRectZero style:self.style];
     capsLock.type = YYKeyButtonTypeCaps;
     [capsLock setImage:[UIImage imageNamed:@"CapsLock"] forState:(UIControlStateNormal)];
@@ -244,7 +244,7 @@ static CGFloat spaceV = 8.0f;
     return capsLock;
 }
 
-- (YYKeyButton *)_spaceKey:(CGSize)size {
+- (YYKeyButton *)spaceKey:(CGSize)size {
     CGRect frame = CGRectMake(0, 0, size.width, size.height);
     YYKeyButton *space = [[YYKeyButton alloc] initWithFrame:frame style:self.style];
     space.type = YYKeyButtonTypeSpace;
@@ -254,7 +254,7 @@ static CGFloat spaceV = 8.0f;
     return space;
 }
 
-- (YYKeyButton *)_deleteKey:(CGSize)size {
+- (YYKeyButton *)deleteKey:(CGSize)size {
     CGRect frame = CGRectMake(0, 0, size.width, size.height);
     YYKeyButton *delete = [[YYKeyButton alloc] initWithFrame:frame style:self.style];
     delete.type = YYKeyButtonTypeDelete;
@@ -269,13 +269,13 @@ static CGFloat spaceV = 8.0f;
     return delete;
 }
 
-- (void)_longPressGestureRecognizerStateChanged:(UIGestureRecognizer *)gestureRecognizer {
+- (void)longPressGestureRecognizerStateChanged:(UIGestureRecognizer *)gestureRecognizer {
     YYKeyButton *delete = (YYKeyButton *)gestureRecognizer.view;
     [delete setSelected:YES];
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:
         {
-            [self _dis_delete_timer:delete];
+            [self dis_delete_timer:delete];
             break;
         }
         case UIGestureRecognizerStateEnded:
@@ -290,7 +290,7 @@ static CGFloat spaceV = 8.0f;
     }
 }
 
-- (void)_dis_delete_timer:(YYKeyButton *)sender {
+- (void)dis_delete_timer:(YYKeyButton *)sender {
     if (!_dis_delete_timer) {
         dispatch_queue_t global = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, global);
@@ -298,7 +298,7 @@ static CGFloat spaceV = 8.0f;
         dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, .1 * NSEC_PER_SEC, 0);
         dispatch_source_set_event_handler(timer, ^{
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self _didSelectDelete:sender];
+                [self didSelectDelete:sender];
             });
         });
         
@@ -307,7 +307,7 @@ static CGFloat spaceV = 8.0f;
     }
 }
 
-- (CGRect)_estimateKeyFrame:(CGRect)superFrame itemSpace:(CGFloat)itemSpace {
+- (CGRect)estimateKeyFrame:(CGRect)superFrame itemSpace:(CGFloat)itemSpace {
     CGFloat estimateWidth = (CGRectGetWidth(superFrame) - itemSpace * 9) / 10;
     CGFloat estimateHeight = (CGRectGetHeight(superFrame) - spaceV * 3) / 4;
     CGRect keyFrame = CGRectMake(0, 0, estimateWidth, estimateHeight);
@@ -315,40 +315,40 @@ static CGFloat spaceV = 8.0f;
     return keyFrame;
 }
 
-- (CGSize)_estimateKeySize:(CGRect)superFrame itemSpace:(CGFloat)itemSpace {
-    return [self _estimateKeyFrame:superFrame itemSpace:itemSpace].size;
+- (CGSize)estimateKeySize:(CGRect)superFrame itemSpace:(CGFloat)itemSpace {
+    return [self estimateKeyFrame:superFrame itemSpace:itemSpace].size;
 }
 
 #pragma mark - Action
-- (void)_playSystemSound {
+- (void)playSystemSound {
     AudioServicesPlaySystemSound(1104);
 }
 
-- (void)_didSelectItem:(YYKeyButton *)sender {
+- (void)didSelectItem:(YYKeyButton *)sender {
     NSString *text = sender.titleLabel.text;
     NSLog(@"didSelectItem: %@", text);
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(yy_keyboardView:didSelectKey:text:)]) {
         [self.delegate yy_keyboardView:self didSelectKey:(YYKeyButtonTypeNormal) text:text];
     }
-    [self _playSystemSound];
+    [self playSystemSound];
 }
 
-- (void)_didSelectSpace:(YYKeyButton *)sender {
+- (void)didSelectSpace:(YYKeyButton *)sender {
     if (self.delegate && [self.delegate respondsToSelector:@selector(yy_keyboardView:didSelectKey:text:)]) {
         [self.delegate yy_keyboardView:self didSelectKey:(YYKeyButtonTypeSpace) text:@" "];
     }
-    [self _playSystemSound];
+    [self playSystemSound];
 }
 
-- (void)_didSelectDelete:(YYKeyButton *)sender {
+- (void)didSelectDelete:(YYKeyButton *)sender {
     if (self.delegate && [self.delegate respondsToSelector:@selector(yy_keyboardView:didSelectKey:text:)]) {
         [self.delegate yy_keyboardView:self didSelectKey:(YYKeyButtonTypeDelete) text:@""];
     }
-    [self _playSystemSound];
+    [self playSystemSound];
 }
 
-- (void)_didSelectCapsLock:(YYKeyButton *)sender {
+- (void)didSelectCapsLock:(YYKeyButton *)sender {
     sender.selected = !sender.isSelected;
     
     //Set ABC or abc.
