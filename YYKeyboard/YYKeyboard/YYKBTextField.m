@@ -30,8 +30,8 @@
 }
 
 - (void)setup {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_textFieldTextDidChange) name:UITextFieldTextDidChangeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_textFieldTextDidBeginEditing) name:UITextFieldTextDidBeginEditingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextDidChange) name:UITextFieldTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextDidBeginEditing) name:UITextFieldTextDidBeginEditingNotification object:nil];
 }
 
 - (void)setKeyboard {

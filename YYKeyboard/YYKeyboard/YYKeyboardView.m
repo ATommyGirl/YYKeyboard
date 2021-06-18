@@ -213,7 +213,7 @@ static CGFloat spaceV = 8.0f;
         for (int j = 0; j < line.count; j++) {
             YYKeyButton *key = [[YYKeyButton alloc] initWithFrame:itemFrame style:self.style];
             [key setTitle:line[j] forState:(UIControlStateNormal)];
-            [key addTarget:self action:@selector(_didSelectItem:) forControlEvents:(UIControlEventTouchUpInside)];
+            [key addTarget:self action:@selector(didSelectItem:) forControlEvents:(UIControlEventTouchUpInside)];
             [subContainer addArrangedSubview:key];
         }
         [containerView addArrangedSubview:subContainer];
@@ -238,7 +238,7 @@ static CGFloat spaceV = 8.0f;
     YYKeyButton *capsLock = [[YYKeyButton alloc] initWithFrame:CGRectZero style:self.style];
     capsLock.type = YYKeyButtonTypeCaps;
     [capsLock setImage:[UIImage imageNamed:@"CapsLock"] forState:(UIControlStateNormal)];
-    [capsLock addTarget:self action:@selector(_didSelectCapsLock:) forControlEvents:(UIControlEventTouchUpInside)];
+    [capsLock addTarget:self action:@selector(didSelectCapsLock:) forControlEvents:(UIControlEventTouchUpInside)];
     [capsLock setSelected:isCapital];
     
     return capsLock;
@@ -249,7 +249,7 @@ static CGFloat spaceV = 8.0f;
     YYKeyButton *space = [[YYKeyButton alloc] initWithFrame:frame style:self.style];
     space.type = YYKeyButtonTypeSpace;
     [space setImage:[UIImage imageNamed:@"Space"] forState:(UIControlStateNormal)];
-    [space addTarget:self action:@selector(_didSelectSpace:) forControlEvents:(UIControlEventTouchUpInside)];
+    [space addTarget:self action:@selector(didSelectSpace:) forControlEvents:(UIControlEventTouchUpInside)];
 
     return space;
 }
@@ -259,10 +259,10 @@ static CGFloat spaceV = 8.0f;
     YYKeyButton *delete = [[YYKeyButton alloc] initWithFrame:frame style:self.style];
     delete.type = YYKeyButtonTypeDelete;
     [delete setImage:[UIImage imageNamed:@"Delete"] forState:(UIControlStateNormal)];
-    [delete addTarget:self action:@selector(_didSelectDelete:) forControlEvents:(UIControlEventTouchUpInside)];
+    [delete addTarget:self action:@selector(didSelectDelete:) forControlEvents:(UIControlEventTouchUpInside)];
 
     //加个 longPressGesture ，设置如下：
-    UILongPressGestureRecognizer *pahGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(_longPressGestureRecognizerStateChanged:)];
+    UILongPressGestureRecognizer *pahGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognizerStateChanged:)];
     pahGestureRecognizer.minimumPressDuration = 0.5;
     [delete addGestureRecognizer:pahGestureRecognizer];
     
@@ -367,6 +367,7 @@ static CGFloat spaceV = 8.0f;
     if (self.delegate && [self.delegate respondsToSelector:@selector(yy_keyboardView:didSelectKey:text:)]) {
         [self.delegate yy_keyboardView:self didSelectKey:(YYKeyButtonTypeCaps) text:@""];
     }
+    [self playSystemSound];
 }
 
 - (void)dealloc {
