@@ -19,8 +19,8 @@
 @protocol YYKeyboardViewDelegate <NSObject>
 @optional
 
-- (void)yy_KeyboardView:(YYKeyboardView *)keyboard didSelectKey:(YYKeyButtonType)type text:(NSString *)text;
-- (void)yy_KeyboardViewDidEndEditing:(YYKeyboardView *)keyboard;
+- (void)yy_keyboardView:(YYKeyboardView *)keyboard didSelectKey:(YYKeyButtonType)type text:(NSString *)text;
+- (void)yy_keyboardViewDidEndEditing:(YYKeyboardView *)keyboard;
 
 @end
 

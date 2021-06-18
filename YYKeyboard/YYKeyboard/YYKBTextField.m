@@ -42,7 +42,7 @@
     self.inputAccessoryView = [keyboard inputAccessoryView];
 }
 
-- (void)yy_KeyboardView:(YYKeyboardView *)keyboard didSelectKey:(YYKeyButtonType)type text:(NSString *)text {
+- (void)yy_keyboardView:(YYKeyboardView *)keyboard didSelectKey:(YYKeyButtonType)type text:(NSString *)text {
     NSRange range = [self selectedRange];
     if (range.location == NSNotFound || range.length == NSNotFound) {
         return;
@@ -77,7 +77,7 @@
     }
 }
 
-- (void)yy_KeyboardViewDidEndEditing:(YYKeyboardView *)keyboard {
+- (void)yy_keyboardViewDidEndEditing:(YYKeyboardView *)keyboard {
     [self endEditing:YES];
 }
 

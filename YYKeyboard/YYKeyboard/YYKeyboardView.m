@@ -6,6 +6,7 @@
 //
 
 #import "YYKeyboardView.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 static CGFloat spaceH = 5.0f;
 static CGFloat spaceV = 8.0f;
@@ -274,7 +275,7 @@ static CGFloat spaceV = 8.0f;
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateBegan:
         {
-            [self _dis_delete_timer];
+            [self _dis_delete_timer:delete];
             break;
         }
         case UIGestureRecognizerStateEnded:
@@ -289,7 +290,7 @@ static CGFloat spaceV = 8.0f;
     }
 }
 
-- (void)_dis_delete_timer {
+- (void)_dis_delete_timer:(YYKeyButton *)sender {
     if (!_dis_delete_timer) {
         dispatch_queue_t global = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, global);
@@ -297,7 +298,7 @@ static CGFloat spaceV = 8.0f;
         dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, .1 * NSEC_PER_SEC, 0);
         dispatch_source_set_event_handler(timer, ^{
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self _deleteAction];
+                [self _didSelectDelete:sender];
             });
         });
         
@@ -319,30 +320,32 @@ static CGFloat spaceV = 8.0f;
 }
 
 #pragma mark - Action
+- (void)_playSystemSound {
+    AudioServicesPlaySystemSound(1104);
+}
 
 - (void)_didSelectItem:(YYKeyButton *)sender {
     NSString *text = sender.titleLabel.text;
     NSLog(@"didSelectItem: %@", text);
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_KeyboardView:didSelectKey:text:)]) {
-        [self.delegate yy_KeyboardView:self didSelectKey:(YYKeyButtonTypeNormal) text:text];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_keyboardView:didSelectKey:text:)]) {
+        [self.delegate yy_keyboardView:self didSelectKey:(YYKeyButtonTypeNormal) text:text];
     }
+    [self _playSystemSound];
 }
 
 - (void)_didSelectSpace:(YYKeyButton *)sender {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_KeyboardView:didSelectKey:text:)]) {
-        [self.delegate yy_KeyboardView:self didSelectKey:(YYKeyButtonTypeSpace) text:@" "];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_keyboardView:didSelectKey:text:)]) {
+        [self.delegate yy_keyboardView:self didSelectKey:(YYKeyButtonTypeSpace) text:@" "];
     }
+    [self _playSystemSound];
 }
 
 - (void)_didSelectDelete:(YYKeyButton *)sender {
-    [self _deleteAction];
-}
-
-- (void)_deleteAction {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_KeyboardView:didSelectKey:text:)]) {
-        [self.delegate yy_KeyboardView:self didSelectKey:(YYKeyButtonTypeDelete) text:@""];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_keyboardView:didSelectKey:text:)]) {
+        [self.delegate yy_keyboardView:self didSelectKey:(YYKeyButtonTypeDelete) text:@""];
     }
+    [self _playSystemSound];
 }
 
 - (void)_didSelectCapsLock:(YYKeyButton *)sender {
@@ -361,8 +364,8 @@ static CGFloat spaceV = 8.0f;
         }
     }
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_KeyboardView:didSelectKey:text:)]) {
-        [self.delegate yy_KeyboardView:self didSelectKey:(YYKeyButtonTypeCaps) text:@""];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_keyboardView:didSelectKey:text:)]) {
+        [self.delegate yy_keyboardView:self didSelectKey:(YYKeyButtonTypeCaps) text:@""];
     }
 }
 
@@ -381,8 +384,8 @@ static CGFloat spaceV = 8.0f;
 }
 
 - (void)yy_inputAccessoryView:(YYInputAccessoryView *)inputAccessoryView didSelectDone:(BOOL)done {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_KeyboardViewDidEndEditing:)]) {
-        [self.delegate yy_KeyboardViewDidEndEditing:self];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_keyboardViewDidEndEditing:)]) {
+        [self.delegate yy_keyboardViewDidEndEditing:self];
     }
 }
 
