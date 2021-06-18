@@ -10,7 +10,7 @@
 static CGFloat spaceH = 5.0f;
 static CGFloat spaceV = 8.0f;
 
-@interface YYKeyboardView()
+@interface YYKeyboardView() <YYInputAccessoryViewDelegate>
 
 @property (nonatomic, strong) dispatch_source_t dis_delete_timer;
 @property (nonatomic, strong) UIView *contentView;
@@ -74,7 +74,7 @@ static CGFloat spaceV = 8.0f;
 }
 
 - (CGRect)_contentFrameOn:(CGRect)frame {
-    CGRect contentFrame = CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame) - (isiPhoneX ? 34 : 0));
+    CGRect contentFrame = CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame) - (isiPhoneX ? (34 + 15) : 0));
     return contentFrame;;
 }
 
@@ -368,6 +368,26 @@ static CGFloat spaceV = 8.0f;
 
 - (void)dealloc {
     NSLog(@"YYKeyboardView dealloc.");
+}
+
+#pragma mark - Input Accessory View
+- (YYInputAccessoryView *)inputAccessoryView {
+    YYInputAccessoryView *inputAccessoryView = [[YYInputAccessoryView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
+    inputAccessoryView.delegate = self;
+    inputAccessoryView.backgroundColor = [YYKeyboard keyboardBackgroundColor:self.style];
+    inputAccessoryView.titleLabel.textColor = [YYKeyboard titleColor:self.style];
+    
+    return inputAccessoryView;
+}
+
+- (void)yy_inputAccessoryView:(YYInputAccessoryView *)inputAccessoryView didSelectDone:(BOOL)done {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_KeyboardViewDidEndEditing:)]) {
+        [self.delegate yy_KeyboardViewDidEndEditing:self];
+    }
+}
+
+- (void)yy_inputAccessoryView:(YYInputAccessoryView *)inputAccessoryView didSwitchMode:(YYInputAccessoryViewMode)mode {
+    [self switchKeyboardMode:mode];
 }
 
 @end

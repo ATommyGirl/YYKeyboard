@@ -20,6 +20,7 @@
 @optional
 
 - (void)yy_KeyboardView:(YYKeyboardView *)keyboard didSelectKey:(YYKeyButtonType)type text:(NSString *)text;
+- (void)yy_KeyboardViewDidEndEditing:(YYKeyboardView *)keyboard;
 
 @end
 
@@ -30,5 +31,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame style:(YYKeyboardStyle)style;
 - (void)switchKeyboardMode:(YYInputAccessoryViewMode)mode;
+- (YYInputAccessoryView *)inputAccessoryView;
 
 @end

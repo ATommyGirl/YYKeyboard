@@ -9,7 +9,7 @@
 #import "YYKeyboardView.h"
 #import "UITextField+ExtentRange.h"
 
-@interface YYKBTextField()<YYKeyboardViewDelegate, YYInputAccessoryViewDelegate>
+@interface YYKBTextField()<YYKeyboardViewDelegate>
 
 @end
 
@@ -35,14 +35,11 @@
 }
 
 - (void)_setKeyboard {
-    CGRect keyboardFrame  = CGRectMake(0, 0, SCREEN_WIDTH, MAX(210, SCREEN_HEIGHT * 0.3) + (isiPhoneX ? 34 : 0));
+    CGRect keyboardFrame  = CGRectMake(0, 0, SCREEN_WIDTH, MAX(210, SCREEN_HEIGHT * 0.305) + (isiPhoneX ? 34 : 0));
     YYKeyboardView *keyboard = [[YYKeyboardView alloc] initWithFrame:keyboardFrame style:(YYKeyboardStyleLight)];
     keyboard.delegate = self;
     self.inputView = keyboard;
-    
-    YYInputAccessoryView *inputAccessoryView = [[YYInputAccessoryView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
-    inputAccessoryView.delegate = self;
-    self.inputAccessoryView = inputAccessoryView;
+    self.inputAccessoryView = [keyboard inputAccessoryView];
 }
 
 - (void)yy_KeyboardView:(YYKeyboardView *)keyboard didSelectKey:(YYKeyButtonType)type text:(NSString *)text {
@@ -80,13 +77,8 @@
     }
 }
 
-- (void)yy_inputAccessoryView:(YYInputAccessoryView *)inputAccessoryView didSelectDone:(BOOL)done {
+- (void)yy_KeyboardViewDidEndEditing:(YYKeyboardView *)keyboard {
     [self endEditing:YES];
-}
-
-- (void)yy_inputAccessoryView:(YYInputAccessoryView *)inputAccessoryView didSwitchMode:(YYInputAccessoryViewMode)mode {
-    YYKeyboardView *keyboard = (YYKeyboardView *)self.inputView;
-    [keyboard switchKeyboardMode:mode];
 }
 
 - (void)_textFieldTextDidChange {
