@@ -8,18 +8,12 @@
 #import <UIKit/UIKit.h>
 #import "YYInputAccessoryView.h"
 #import "YYKeyButton.h"
+#import "YYKeyboard.h"
 
 #define isiPhoneX ([[UIScreen mainScreen] bounds].size.height >= 812)
 
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
-
-typedef NS_ENUM(NSUInteger, YYKeyboardViewStyle) {
-    YYKeyboardViewStyleDark = 0,
-    YYKeyboardViewStyleLight,
-    YYKeyboardViewStyleLikeSystemDark,
-    YYKeyboardViewStyleLikeSystemLight
-};
 
 @class YYKeyboardView;
 @protocol YYKeyboardViewDelegate <NSObject>
@@ -32,9 +26,9 @@ typedef NS_ENUM(NSUInteger, YYKeyboardViewStyle) {
 @interface YYKeyboardView : UIView
 
 @property (nonatomic, weak) id<YYKeyboardViewDelegate> delegate;
-@property (nonatomic, assign) YYKeyboardViewStyle style;
+@property (nonatomic, assign) YYKeyboardStyle style;
 
-- (instancetype)initWithFrame:(CGRect)frame style:(YYKeyboardViewStyle)style;
+- (instancetype)initWithFrame:(CGRect)frame style:(YYKeyboardStyle)style;
 - (void)switchKeyboardMode:(YYInputAccessoryViewMode)mode;
 
 @end

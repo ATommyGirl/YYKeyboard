@@ -36,7 +36,7 @@
 
 - (void)_setKeyboard {
     CGRect keyboardFrame  = CGRectMake(0, 0, SCREEN_WIDTH, MAX(210, SCREEN_HEIGHT * 0.3) + (isiPhoneX ? 34 : 0));
-    YYKeyboardView *keyboard = [[YYKeyboardView alloc] initWithFrame:keyboardFrame style:(YYKeyboardViewStyleLight)];
+    YYKeyboardView *keyboard = [[YYKeyboardView alloc] initWithFrame:keyboardFrame style:(YYKeyboardStyleLight)];
     keyboard.delegate = self;
     self.inputView = keyboard;
     

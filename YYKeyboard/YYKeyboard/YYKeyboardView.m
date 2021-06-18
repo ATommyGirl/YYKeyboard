@@ -19,7 +19,7 @@ static CGFloat spaceV = 8.0f;
 
 @implementation YYKeyboardView
 
-- (instancetype)initWithFrame:(CGRect)frame style:(YYKeyboardViewStyle)style {
+- (instancetype)initWithFrame:(CGRect)frame style:(YYKeyboardStyle)style {
     self = [super initWithFrame:frame];
     if (self) {
         self.style = style;
@@ -68,7 +68,7 @@ static CGFloat spaceV = 8.0f;
 
 - (void)_setContentView:(CGRect)frame {
     UIView *content = [[UIView alloc] initWithFrame:frame];
-    [content setBackgroundColor:[UIColor colorWithRed:60/255.0 green:60/255.0 blue:62/255.0 alpha:1]];
+    [content setBackgroundColor:[YYKeyboard keyboardBackgroundColor:self.style]];
     [self addSubview:content];
     self.contentView = content;
 }
@@ -92,48 +92,6 @@ static CGFloat spaceV = 8.0f;
                   @[@"z", @"x", @"c", @"v", @"b", @"n", @"m"]];/*Space & Delete*/
     }
     [self _setAbcView:frame item:items isCapital:isCapital];
-}
-#pragma mark - Style
-- (UIColor *)_keyBackgroundColor {
-    UIColor *color = [UIColor colorWithRed:119/255.0 green:119/255.0 blue:119/255.0 alpha:1];
-    switch (self.style) {
-        case YYKeyboardViewStyleDark:
-        case YYKeyboardViewStyleLikeSystemDark:
-            break;
-        case YYKeyboardViewStyleLight:
-        case YYKeyboardViewStyleLikeSystemLight:
-            color = [UIColor whiteColor];
-            break;
-    }
-    return color;
-}
-
-- (UIColor *)_keyboardBackgroundColor {
-    UIColor *color = [UIColor colorWithRed:60/255.0 green:60/255.0 blue:62/255.0 alpha:1];
-    switch (self.style) {
-        case YYKeyboardViewStyleDark:
-        case YYKeyboardViewStyleLikeSystemDark:
-            break;
-        case YYKeyboardViewStyleLight:
-        case YYKeyboardViewStyleLikeSystemLight:
-            color = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1];
-            break;
-    }
-    return color;
-}
-
-- (UIColor *)_keyColor {
-    UIColor *color = [UIColor whiteColor];
-    switch (self.style) {
-        case YYKeyboardViewStyleDark:
-        case YYKeyboardViewStyleLikeSystemDark:
-            break;
-        case YYKeyboardViewStyleLight:
-        case YYKeyboardViewStyleLikeSystemLight:
-            color = [UIColor blackColor];
-            break;
-    }
-    return color;
 }
 
 #pragma mark - UI
@@ -252,7 +210,7 @@ static CGFloat spaceV = 8.0f;
         NSArray *line = items[i];
         UIStackView *subContainer = [self _setSubContainer:itemSpace];
         for (int j = 0; j < line.count; j++) {
-            YYKeyButton *key = [[YYKeyButton alloc] initWithFrame:itemFrame];
+            YYKeyButton *key = [[YYKeyButton alloc] initWithFrame:itemFrame style:self.style];
             [key setTitle:line[j] forState:(UIControlStateNormal)];
             [key addTarget:self action:@selector(_didSelectItem:) forControlEvents:(UIControlEventTouchUpInside)];
             [subContainer addArrangedSubview:key];
@@ -276,7 +234,7 @@ static CGFloat spaceV = 8.0f;
 }
 
 - (YYKeyButton *)_capsLock:(BOOL)isCapital {
-    YYKeyButton *capsLock = [[YYKeyButton alloc] initWithFrame:CGRectZero];
+    YYKeyButton *capsLock = [[YYKeyButton alloc] initWithFrame:CGRectZero style:self.style];
     capsLock.type = YYKeyButtonTypeCaps;
     [capsLock setImage:[UIImage imageNamed:@"CapsLock"] forState:(UIControlStateNormal)];
     [capsLock addTarget:self action:@selector(_didSelectCapsLock:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -287,7 +245,7 @@ static CGFloat spaceV = 8.0f;
 
 - (YYKeyButton *)_spaceKey:(CGSize)size {
     CGRect frame = CGRectMake(0, 0, size.width, size.height);
-    YYKeyButton *space = [[YYKeyButton alloc] initWithFrame:frame];
+    YYKeyButton *space = [[YYKeyButton alloc] initWithFrame:frame style:self.style];
     space.type = YYKeyButtonTypeSpace;
     [space setImage:[UIImage imageNamed:@"Space"] forState:(UIControlStateNormal)];
     [space addTarget:self action:@selector(_didSelectSpace:) forControlEvents:(UIControlEventTouchUpInside)];
@@ -297,7 +255,7 @@ static CGFloat spaceV = 8.0f;
 
 - (YYKeyButton *)_deleteKey:(CGSize)size {
     CGRect frame = CGRectMake(0, 0, size.width, size.height);
-    YYKeyButton *delete = [[YYKeyButton alloc] initWithFrame:frame];
+    YYKeyButton *delete = [[YYKeyButton alloc] initWithFrame:frame style:self.style];
     delete.type = YYKeyButtonTypeDelete;
     [delete setImage:[UIImage imageNamed:@"Delete"] forState:(UIControlStateNormal)];
     [delete addTarget:self action:@selector(_didSelectDelete:) forControlEvents:(UIControlEventTouchUpInside)];
