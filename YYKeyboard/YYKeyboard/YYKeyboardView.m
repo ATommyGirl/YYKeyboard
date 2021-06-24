@@ -368,6 +368,41 @@ static CGFloat spaceV = 8.0f;
         [self.delegate yy_keyboardView:self didSelectKey:(YYKeyButtonTypeCaps) text:@""];
     }
     [self playSystemSound];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_keyboardViewDidEndEditing:)]) {
+        [self.delegate yy_keyboardViewDidEndEditing:self];
+    }
+}
+
+- (id<YYKeyboardViewDelegate>)delegate {
+    if (!_delegate) {
+        _delegate = [self performSelector:@selector(topViewController)];
+    }
+    
+    return _delegate;
+}
+
+- (UIViewController *)topViewController {
+    UIViewController *resultVC;
+    resultVC = [self _topViewController:[[UIApplication sharedApplication].keyWindow rootViewController]];
+    while (resultVC.presentedViewController) {
+        resultVC = [self _topViewController:resultVC.presentedViewController];
+    }
+    
+    if ([resultVC isKindOfClass:[UINavigationController class]]) {
+        resultVC = resultVC.childViewControllers.lastObject;
+    }
+    return resultVC;
+}
+
+- (UIViewController *)_topViewController:(UIViewController *)vc {
+    if ([vc isKindOfClass:[UINavigationController class]]) {
+        return [self _topViewController:[(UINavigationController *)vc topViewController]];
+    } else if ([vc isKindOfClass:[UITabBarController class]]) {
+        return [self _topViewController:[(UITabBarController *)vc selectedViewController]];
+    } else {
+        return vc;
+    }
+    return nil;
 }
 
 - (void)dealloc {
@@ -385,6 +420,8 @@ static CGFloat spaceV = 8.0f;
 }
 
 - (void)yy_inputAccessoryView:(YYInputAccessoryView *)inputAccessoryView didSelectDone:(BOOL)done {
+    //UIResponder *responder = [[[UIApplication sharedApplication] keyWindow] performSelector:@selector(firstResponder)];
+    //[responder resignFirstResponder];
     if (self.delegate && [self.delegate respondsToSelector:@selector(yy_keyboardViewDidEndEditing:)]) {
         [self.delegate yy_keyboardViewDidEndEditing:self];
     }
