@@ -34,6 +34,7 @@
 
 - (IBAction)leftItem1Action:(UIButton *)sender {
     sender.selected = !sender.isSelected;
+    _leftItem2.selected = NO;
     self.mode = sender.isSelected ? YYInputAccessoryViewModeSymbol : YYInputAccessoryViewModeAbc;
     if (self.delegate && [self.delegate respondsToSelector:@selector(yy_inputAccessoryView:didSwitchMode:)]) {
         [self.delegate yy_inputAccessoryView:self didSwitchMode:self.mode];
@@ -42,6 +43,7 @@
 
 - (IBAction)leftItem2Action:(UIButton *)sender {
     sender.selected = !sender.isSelected;
+    _leftItem1.selected = NO;
     self.mode = sender.isSelected ? YYInputAccessoryViewModeNumber : YYInputAccessoryViewModeAbc;
     if (self.delegate && [self.delegate respondsToSelector:@selector(yy_inputAccessoryView:didSwitchMode:)]) {
         [self.delegate yy_inputAccessoryView:self didSwitchMode:self.mode];

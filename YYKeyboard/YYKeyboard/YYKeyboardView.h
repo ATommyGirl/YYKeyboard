@@ -7,19 +7,30 @@
 
 #import <UIKit/UIKit.h>
 #import "YYInputAccessoryView.h"
+#import "YYKeyButton.h"
+#import "YYKeyboard.h"
+
+#define isiPhoneX ([[UIScreen mainScreen] bounds].size.height >= 812)
+
+#define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
+#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 
 @class YYKeyboardView;
 @protocol YYKeyboardViewDelegate <NSObject>
 @optional
 
-- (void)yy_KeyboardView:(YYKeyboardView *)keyboard didSelectKey:(NSString *)text;
+- (void)yy_keyboardView:(YYKeyboardView *)keyboard didSelectKey:(YYKeyButtonType)type text:(NSString *)text;
+- (void)yy_keyboardViewDidEndEditing:(YYKeyboardView *)keyboard;
 
 @end
 
 @interface YYKeyboardView : UIView
 
-@property (weak, nonatomic) id<YYKeyboardViewDelegate> delegate;
+@property (nonatomic, weak) id<YYKeyboardViewDelegate> delegate;
+@property (nonatomic, assign) YYKeyboardStyle style;
 
+- (instancetype)initWithFrame:(CGRect)frame style:(YYKeyboardStyle)style;
 - (void)switchKeyboardMode:(YYInputAccessoryViewMode)mode;
+- (YYInputAccessoryView *)inputAccessoryView;
 
 @end
