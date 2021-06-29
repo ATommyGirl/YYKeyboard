@@ -79,6 +79,7 @@ static CGFloat spaceV = 8.0f;
     return contentFrame;;
 }
 
+#pragma mark - UI
 - (void)setLetterView:(CGRect)frame isCapital:(BOOL)isCapital {
     NSArray *items;
     if (isCapital) {
@@ -95,7 +96,31 @@ static CGFloat spaceV = 8.0f;
     [self setAbcView:frame item:items isCapital:isCapital];
 }
 
-#pragma mark - UI
+- (void)_setAbcView:(CGRect)frame item:(NSArray *)items isCapital:(BOOL)isCapital {
+    NSArray * temp = @[@[@"q", @"w", @"e", @"r", @"t", @"y", @"u", @"i", @"o", @"p"],
+                       @[@"a", @"s", @"d", @"f", @"g", @"h", @"j", @"k", @"l"],
+                       @[@"z", @"x", @"c", @"v", @"b", @"n", @"m"]];/*Caps Lock & Delete*/
+                        /*123, Space, return*/
+    
+    CGFloat itemSpace = 5;
+    UIStackView *containerView = [self setMainContainer:frame item:temp itemSpace:itemSpace];
+    
+    //Caps Lock & Delete 单独插入.
+    CGSize estimateKeySize = [self estimateKeySize:frame itemSpace:itemSpace];
+    CGFloat estimateWidth  = estimateKeySize.width;
+    CGFloat estimateHeight = estimateKeySize.height;
+    CGFloat deleteWidth    = estimateWidth + (estimateWidth - itemSpace)*0.5 + spaceH;
+    YYKeyButton *space  = [self spaceKey:CGSizeMake(deleteWidth, estimateHeight)];
+    YYKeyButton *delete = [self deleteKey:CGSizeMake(deleteWidth, estimateHeight)];
+    UIStackView *line3SubContainer = containerView.arrangedSubviews[2];
+    line3SubContainer.distribution = UIStackViewDistributionFillProportionally;
+    [line3SubContainer insertArrangedSubview:space atIndex:0];
+    [line3SubContainer addArrangedSubview:delete];
+    /*123, Space, return*/
+    
+    [self.contentView addSubview:containerView];
+}
+
 - (void)setAbcView:(CGRect)frame item:(NSArray *)items isCapital:(BOOL)isCapital {
     CGFloat itemSpace = 5;
     UIStackView *containerView = [self setMainContainer:frame item:items itemSpace:itemSpace];
@@ -194,6 +219,16 @@ static CGFloat spaceV = 8.0f;
     }
     [result addObject:tempArray];
     [self splitArray:source count:count lineCount:3 result:result];
+}
+
+- (void)insertItemTo:(UIStackView *)container line:(NSInteger)line index:(NSInteger)index key:(YYKeyButton *)key {
+    UIStackView *sub = container.arrangedSubviews[line - 1];
+    sub.distribution = UIStackViewDistributionFillProportionally;
+    if (index >= 0) {
+        [sub insertArrangedSubview:key atIndex:index];
+    }else {
+        [sub addArrangedSubview:key];
+    }
 }
 
 - (UIStackView *)setMainContainer:(CGRect)frame item:(NSArray *)items itemSpace:(CGFloat)itemSpace {
@@ -368,9 +403,6 @@ static CGFloat spaceV = 8.0f;
         [self.delegate yy_keyboardView:self didSelectKey:(YYKeyButtonTypeCaps) text:@""];
     }
     [self playSystemSound];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(yy_keyboardViewDidEndEditing:)]) {
-        [self.delegate yy_keyboardViewDidEndEditing:self];
-    }
 }
 
 - (id<YYKeyboardViewDelegate>)delegate {
