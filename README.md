@@ -1,3 +1,2 @@
 # YYKeyboard
-
-Custom keyboard.
+A custom keyboard for iOS.
