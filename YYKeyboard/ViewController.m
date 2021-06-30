@@ -86,7 +86,7 @@
 }
 
 - (IBAction)testAction:(id)sender {
-    [self.textField endEditing:YES];
+    
 }
 
 @end
