@@ -75,10 +75,17 @@
         default:
             break;
     }
+    
+    if (self.yyDelegate && [self.yyDelegate respondsToSelector:@selector(yykb_textField:didEnterCharacters:)]) {
+        [self.yyDelegate yykb_textField:self didEnterCharacters:text];
+    }
 }
 
 - (void)yy_keyboardViewDidEndEditing:(YYKeyboardView *)keyboard {
     [self endEditing:YES];
+    if (self.yyDelegate && [self.yyDelegate respondsToSelector:@selector(yykb_textFieldDidPressReturn:)]) {
+        [self.yyDelegate yykb_textFieldDidPressReturn:self];
+    }
 }
 
 - (void)textFieldTextDidChange {
