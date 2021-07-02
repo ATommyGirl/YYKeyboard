@@ -7,6 +7,9 @@
 
 #import "YYInputAccessoryView.h"
 
+NSNotificationName const YYInputAccessoryDidReturnNotification = @"YYInputAccessoryDidReturnNotification";
+NSNotificationName const YYInputAccessoryDidSwitchModeNotification = @"YYInputAccessoryDidSwitchModeNotification";
+
 @interface YYInputAccessoryView()
 
 @property (weak, nonatomic) IBOutlet UIButton *doneBtn;
@@ -29,6 +32,8 @@
 - (IBAction)doneAction:(id)sender {
     if (self.delegate && [self.delegate respondsToSelector:@selector(yy_inputAccessoryView:didSelectDone:)]) {
         [self.delegate yy_inputAccessoryView:self didSelectDone:YES];
+    }else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:YYInputAccessoryDidReturnNotification object:self];
     }
 }
 
@@ -38,6 +43,8 @@
     self.mode = sender.isSelected ? YYInputAccessoryViewModeSymbol : YYInputAccessoryViewModeAbc;
     if (self.delegate && [self.delegate respondsToSelector:@selector(yy_inputAccessoryView:didSwitchMode:)]) {
         [self.delegate yy_inputAccessoryView:self didSwitchMode:self.mode];
+    }else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:YYInputAccessoryDidSwitchModeNotification object:@(self.mode)];
     }
 }
 
@@ -47,6 +54,8 @@
     self.mode = sender.isSelected ? YYInputAccessoryViewModeNumber : YYInputAccessoryViewModeAbc;
     if (self.delegate && [self.delegate respondsToSelector:@selector(yy_inputAccessoryView:didSwitchMode:)]) {
         [self.delegate yy_inputAccessoryView:self didSwitchMode:self.mode];
+    }else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:YYInputAccessoryDidSwitchModeNotification object:@(self.mode)];
     }
 }
 

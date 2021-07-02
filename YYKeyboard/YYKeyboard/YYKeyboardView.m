@@ -28,6 +28,7 @@ static CGFloat spaceV = 8.0f;
         [self _setContentView:contentFrame];
         [self setLetterView:contentFrame isCapital:NO];
         [self setBackgroundColor:[UIColor clearColor]];
+        [self addYYInputAccessoryViewNotification];
     }
     
     return self;
@@ -40,6 +41,7 @@ static CGFloat spaceV = 8.0f;
         [self _setContentView:contentFrame];
         [self setLetterView:contentFrame isCapital:NO];
         [self setBackgroundColor:[UIColor clearColor]];
+        [self addYYInputAccessoryViewNotification];
     }
     
     return self;
@@ -94,31 +96,6 @@ static CGFloat spaceV = 8.0f;
                   @[@"z", @"x", @"c", @"v", @"b", @"n", @"m"]];/*Space & Delete*/
     }
     [self setAbcView:frame item:items isCapital:isCapital];
-}
-
-- (void)_setAbcView:(CGRect)frame item:(NSArray *)items isCapital:(BOOL)isCapital {
-    NSArray * temp = @[@[@"q", @"w", @"e", @"r", @"t", @"y", @"u", @"i", @"o", @"p"],
-                       @[@"a", @"s", @"d", @"f", @"g", @"h", @"j", @"k", @"l"],
-                       @[@"z", @"x", @"c", @"v", @"b", @"n", @"m"]];/*Caps Lock & Delete*/
-                        /*123, Space, return*/
-    
-    CGFloat itemSpace = 5;
-    UIStackView *containerView = [self setMainContainer:frame item:temp itemSpace:itemSpace];
-    
-    //Caps Lock & Delete 单独插入.
-    CGSize estimateKeySize = [self estimateKeySize:frame itemSpace:itemSpace];
-    CGFloat estimateWidth  = estimateKeySize.width;
-    CGFloat estimateHeight = estimateKeySize.height;
-    CGFloat deleteWidth    = estimateWidth + (estimateWidth - itemSpace)*0.5 + spaceH;
-    YYKeyButton *space  = [self spaceKey:CGSizeMake(deleteWidth, estimateHeight)];
-    YYKeyButton *delete = [self deleteKey:CGSizeMake(deleteWidth, estimateHeight)];
-    UIStackView *line3SubContainer = containerView.arrangedSubviews[2];
-    line3SubContainer.distribution = UIStackViewDistributionFillProportionally;
-    [line3SubContainer insertArrangedSubview:space atIndex:0];
-    [line3SubContainer addArrangedSubview:delete];
-    /*123, Space, return*/
-    
-    [self.contentView addSubview:containerView];
 }
 
 - (void)setAbcView:(CGRect)frame item:(NSArray *)items isCapital:(BOOL)isCapital {
@@ -219,16 +196,6 @@ static CGFloat spaceV = 8.0f;
     }
     [result addObject:tempArray];
     [self splitArray:source count:count lineCount:3 result:result];
-}
-
-- (void)insertItemTo:(UIStackView *)container line:(NSInteger)line index:(NSInteger)index key:(YYKeyButton *)key {
-    UIStackView *sub = container.arrangedSubviews[line - 1];
-    sub.distribution = UIStackViewDistributionFillProportionally;
-    if (index >= 0) {
-        [sub insertArrangedSubview:key atIndex:index];
-    }else {
-        [sub addArrangedSubview:key];
-    }
 }
 
 - (UIStackView *)setMainContainer:(CGRect)frame item:(NSArray *)items itemSpace:(CGFloat)itemSpace {
@@ -361,7 +328,6 @@ static CGFloat spaceV = 8.0f;
 
 - (void)didSelectItem:(YYKeyButton *)sender {
     NSString *text = sender.titleLabel.text;
-    NSLog(@"didSelectItem: %@", text);
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(yy_keyboardView:didSelectKey:text:)]) {
         [self.delegate yy_keyboardView:self didSelectKey:(YYKeyButtonTypeNormal) text:text];
@@ -439,9 +405,22 @@ static CGFloat spaceV = 8.0f;
 
 - (void)dealloc {
     NSLog(@"YYKeyboardView dealloc.");
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Input Accessory View
+
+- (void)addYYInputAccessoryViewNotification {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_switchKeyboardMode:) name:YYInputAccessoryDidSwitchModeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(yy_inputAccessoryView:didSelectDone:) name:YYInputAccessoryDidReturnNotification object:nil];
+}
+
+- (void)_switchKeyboardMode:(NSNotification *)notification {
+    YYInputAccessoryViewMode mode = [notification.object integerValue];
+    [self switchKeyboardMode:mode];
+}
+
 - (YYInputAccessoryView *)inputAccessoryView {
     YYInputAccessoryView *inputAccessoryView = [[YYInputAccessoryView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 44)];
     inputAccessoryView.delegate = self;
@@ -452,8 +431,6 @@ static CGFloat spaceV = 8.0f;
 }
 
 - (void)yy_inputAccessoryView:(YYInputAccessoryView *)inputAccessoryView didSelectDone:(BOOL)done {
-    //UIResponder *responder = [[[UIApplication sharedApplication] keyWindow] performSelector:@selector(firstResponder)];
-    //[responder resignFirstResponder];
     if (self.delegate && [self.delegate respondsToSelector:@selector(yy_keyboardViewDidEndEditing:)]) {
         [self.delegate yy_keyboardViewDidEndEditing:self];
     }

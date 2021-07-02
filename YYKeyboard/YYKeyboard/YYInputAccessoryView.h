@@ -31,3 +31,7 @@ typedef NS_ENUM(NSInteger, YYInputAccessoryViewMode){
 @property (weak, nonatomic) id<YYInputAccessoryViewDelegate> delegate;
 
 @end
+
+UIKIT_EXTERN NSNotificationName const YYInputAccessoryDidReturnNotification;
+UIKIT_EXTERN NSNotificationName const YYInputAccessoryDidSwitchModeNotification;
+

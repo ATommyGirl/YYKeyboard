@@ -63,13 +63,13 @@
     [self.webView loadRequest:request];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                          selector:@selector(KeyboardWillShow:)
+                                          selector:@selector(keyboardWillShow:)
                                           name:UIKeyboardWillShowNotification
                                           object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                          selector:@selector(KeyboardWillHide:)
-                                          name:UIKeyboardWillHideNotification
+                                          selector:@selector(keyboardDidHide:)
+                                          name:UIKeyboardDidHideNotification
                                           object:nil];
     
 }
@@ -78,18 +78,24 @@
     [super viewDidAppear:animated];
 }
 
-- (void)KeyboardWillShow:(NSNotification *)aNotification {
+- (void)keyboardWillShow:(NSNotification *)notification {
     NSLog(@"[:%s",__FUNCTION__);
     UIResponder *first = [[[UIApplication sharedApplication] keyWindow] performSelector:@selector(firstResponder)];
     NSLog(@"\n%@\n%@\n%@", first, first.inputView, first.inputAccessoryView);
     NSLog(@"--------------");
 }
 
-- (void)KeyboardWillHide:(NSNotification *)aNotification {
+- (void)keyboardDidHide:(NSNotification *)notification {
     NSLog(@"[:%s",__FUNCTION__);
     UIResponder *first = [[[UIApplication sharedApplication] keyWindow] performSelector:@selector(firstResponder)];
     NSLog(@"\n%@\n%@\n%@", first, first.inputView, first.inputAccessoryView);
     NSLog(@"--------------");
+    
+    for (UIView *view in self.webView.scrollView.subviews) {
+        if([[view.class description] hasPrefix:@"WKContent"]) {
+            [view reloadInputViews];
+        }
+    }
 }
 
 - (void)setInputViewForWKWebView:(WKWebView *)webView {
@@ -116,6 +122,8 @@
 
         Method method = class_getInstanceMethod([_YYKeyboardView class], @selector(inputView));
         class_addMethod(newClass, @selector(inputView), method_getImplementation(method), method_getTypeEncoding(method));
+        Method method1 = class_getInstanceMethod([_YYKeyboardView class], @selector(inputAccessoryView));
+        class_addMethod(newClass, @selector(inputAccessoryView), method_getImplementation(method1), method_getTypeEncoding(method1));
         
         objc_registerClassPair(newClass);
     }
@@ -129,6 +137,7 @@
     for (UIView *view in webView.scrollView.subviews) {
         if([[view.class description] hasPrefix:@"WKContent"]) {
             targetView = view;
+            break;
         }
     }
 
@@ -274,6 +283,11 @@
     if ([message.body caseInsensitiveCompare:@"open"] == NSOrderedSame) {
         //Call your keyboard.
         [self setInputViewForWKWebView:self.webView];
+        for (UIView *view in self.webView.scrollView.subviews) {
+            if([[view.class description] hasPrefix:@"WKContent"]) {
+                [view reloadInputViews];
+            }
+        }
     }else if([message.body caseInsensitiveCompare:@"close"] == NSOrderedSame) {
         
     }
@@ -285,7 +299,7 @@
 @implementation _YYKeyboardView
 
 - (id)inputAccessoryView {
-    return nil;
+    return [[self inputView] inputAccessoryView];
 }
 
 - (YYKeyboardView *)inputView {
