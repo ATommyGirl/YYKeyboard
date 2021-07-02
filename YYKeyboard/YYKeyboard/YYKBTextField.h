@@ -11,7 +11,7 @@
 
 @interface YYKBTextField : UITextField
 
-@property (nonatomic, assign) id<YYKBTextFieldDelegate> yyDelegate;
+@property (nonatomic, assign) id<YYKBTextFieldDelegate> yy_keyboardDelegate;
 
 @end
 

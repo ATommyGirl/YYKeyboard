@@ -76,15 +76,15 @@
             break;
     }
     
-    if (self.yyDelegate && [self.yyDelegate respondsToSelector:@selector(yykb_textField:didEnterCharacters:)]) {
-        [self.yyDelegate yykb_textField:self didEnterCharacters:text];
+    if (self.yy_keyboardDelegate && [self.yy_keyboardDelegate respondsToSelector:@selector(yykb_textField:didEnterCharacters:)]) {
+        [self.yy_keyboardDelegate yykb_textField:self didEnterCharacters:text];
     }
 }
 
 - (void)yy_keyboardViewDidEndEditing:(YYKeyboardView *)keyboard {
     [self endEditing:YES];
-    if (self.yyDelegate && [self.yyDelegate respondsToSelector:@selector(yykb_textFieldDidPressReturn:)]) {
-        [self.yyDelegate yykb_textFieldDidPressReturn:self];
+    if (self.yy_keyboardDelegate && [self.yy_keyboardDelegate respondsToSelector:@selector(yykb_textFieldDidPressReturn:)]) {
+        [self.yy_keyboardDelegate yykb_textFieldDidPressReturn:self];
     }
 }
 

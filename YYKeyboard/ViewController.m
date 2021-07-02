@@ -8,7 +8,7 @@
 #import "ViewController.h"
 #import "YYKBTextField.h"
 
-@interface ViewController ()
+@interface ViewController () <YYKBTextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *textField0;
 @property (weak, nonatomic) IBOutlet YYKBTextField *textField;
@@ -36,11 +36,20 @@
                                           selector:@selector(KeyboardWillHide:)
                                           name:UIKeyboardWillHideNotification
                                           object:nil];
+    
+    self.textField.yy_keyboardDelegate = self;
+    
 }
 
+- (void)yykb_textField:(YYKBTextField *)textField didEnterCharacters:(NSString *)string {
+    NSLog(@"YYKBTextField didEnterCharacters : %@", string);
+}
 
-- (void)KeyboardWillShow:(NSNotification *)aNotification
-{
+- (void)yykb_textFieldDidPressReturn:(YYKBTextField *)textField {
+    NSLog(@"YYKBTextField: Login success!");
+}
+
+- (void)KeyboardWillShow:(NSNotification *)aNotification {
     //获取键盘的高度
     /*
      iphone 6:
@@ -81,8 +90,7 @@
 }
 
 //当键退出时调用
-- (void)KeyboardWillHide:(NSNotification *)aNotification
-{
+- (void)KeyboardWillHide:(NSNotification *)aNotification {
 }
 
 - (IBAction)testAction:(id)sender {
