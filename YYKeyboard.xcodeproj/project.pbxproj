@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5801B3162668E3C10095795A /* UITextField+ExtentRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 5801B3152668E3C10095795A /* UITextField+ExtentRange.m */; };
 		5801B31A2668EEE60095795A /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5801B3192668EEE60095795A /* RootViewController.m */; };
+		5837267626955C1600F57AD6 /* YYKeyboard.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5837267526955C1600F57AD6 /* YYKeyboard.xcassets */; };
 		58A5E052266612B1008AD8D4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A5E051266612B1008AD8D4 /* AppDelegate.m */; };
 		58A5E058266612B1008AD8D4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A5E057266612B1008AD8D4 /* ViewController.m */; };
 		58A5E05B266612B1008AD8D4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58A5E059266612B1008AD8D4 /* Main.storyboard */; };
@@ -32,6 +33,7 @@
 		5801B3152668E3C10095795A /* UITextField+ExtentRange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextField+ExtentRange.m"; sourceTree = "<group>"; };
 		5801B3182668EEE60095795A /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		5801B3192668EEE60095795A /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		5837267526955C1600F57AD6 /* YYKeyboard.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = YYKeyboard.xcassets; sourceTree = "<group>"; };
 		58A5E04D266612B1008AD8D4 /* YYKeyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YYKeyboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58A5E050266612B1008AD8D4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		58A5E051266612B1008AD8D4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 		58B136D6266875480025962F /* YYKeyboard */ = {
 			isa = PBXGroup;
 			children = (
+				5837267526955C1600F57AD6 /* YYKeyboard.xcassets */,
 				58B136DE266875480025962F /* YYInputAccessoryView.h */,
 				58B136D7266875480025962F /* YYInputAccessoryView.m */,
 				58B136DC266875480025962F /* YYInputAccessoryView.xib */,
@@ -193,6 +196,7 @@
 				58B136E2266875480025962F /* YYKeyboardView.xib in Resources */,
 				58A5E05D266612B2008AD8D4 /* Assets.xcassets in Resources */,
 				58B09D5B2681B78D00F1D5CB /* index.html in Resources */,
+				5837267626955C1600F57AD6 /* YYKeyboard.xcassets in Resources */,
 				58B136E4266875480025962F /* YYInputAccessoryView.xib in Resources */,
 				58A5E05B266612B1008AD8D4 /* Main.storyboard in Resources */,
 			);
